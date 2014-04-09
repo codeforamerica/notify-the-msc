@@ -16,6 +16,7 @@ hub_url = "%s:%s@ondemand.saucelabs.com:80/wd/hub" % (SAUCE_USERNAME, SAUCE_ACCE
 if 'TRAVIS_JOB_NUMBER' in os.environ:
     using_travis = True
     hub_url = "%s:%s@localhost:4445" % (SAUCE_USERNAME, SAUCE_ACCESS_KEY)
+    print "USING TRAVIS", hub_url
 
 class NewVisitorTest(unittest.TestCase):
 
@@ -26,6 +27,7 @@ class NewVisitorTest(unittest.TestCase):
             caps['version'] = "7"
             if using_travis:
                 caps['tunnel-identifier'] = os.environ['TRAVIS_JOB_NUMBER']
+                print caps
             self.browser = webdriver.Remote(
                 command_executor='http://%s' % hub_url,
                 desired_capabilities=caps)
