@@ -8,7 +8,7 @@ env:
   global:
   - secure: qexVO6+laHbnAYBrB1T8vSSsXEh6G6/hWX9WeWHYk4U0ePFCbUsNPEc9j4TsiN7um/3cYbKtEMYEaBLsVsJg/ozazNoIqLzN1xgjUUwVlGDWyyARVEzwruP2WvwihiDdRZ3HwoQvQ/bwbUCxRxyXRo013jK3coltAyxeJx0XA3o=
   - secure: keMIQIlblnm5tFRHJZQ3zLcryFnL0tYd0qjBK56zJcVgXyba5nwpYyqoyhelPHctK0RiLSS9YyaOHoU/POHiQvXcbHvMJR2rUpA/WMQxWn3QNjxsq4zRexEhVSW+AS28hO0yk0UztLf24HginYjyKxFKGZyUKTAyv6/qsFyRxEU=
-  - NOTIFY_TEST_REMOTE_BROWSER: YES
+  - NOTIFY_TEST_REMOTE_BROWSER=YES
 before_script:
   - curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash
   - python main.py &
