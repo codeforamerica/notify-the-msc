@@ -7,8 +7,8 @@ remote_browser = False
 if 'NOTIFY_TEST_REMOTE_BROWSER' in os.environ and os.environ['NOTIFY_TEST_REMOTE_BROWSER'] == "YES":
     remote_browser = True
 
-SAUCE_USERNAME = os.environ['SAUCE_USERNAME']
-SAUCE_ACCESS_KEY = os.environ['SAUCE_ACCESS_KEY']
+SAUCE_USERNAME = os.environ.get('SAUCE_USERNAME')
+SAUCE_ACCESS_KEY = os.environ.get('SAUCE_ACCESS_KEY')
 
 using_travis = False
 hub_url = "%s:%s@localhost:4445" % (SAUCE_USERNAME, SAUCE_ACCESS_KEY)
@@ -43,6 +43,37 @@ class NewVisitorTest(unittest.TestCase):
 
         # Paramedic sees that the page title mentions 'Notify the MSC'.
         self.assertIn('Notify the MSC', self.browser.title)
+
+    def test_can_load_page_and_submit_valid_input(self):
+        # Paramedic opens the app.
+        self.browser.get('http://localhost:5000')
+
+        # Paramedic sees this field.
+        pickup_address_field = self.browser.find_element_by_name('pickup-address')
+        self.assertTrue(pickup_address_field.is_displayed())
+
+        # Paramedic sees that the field is labeled 'Pickup address.'
+        pickup_address_label = self.browser.find_element_by_id('pickup-address-label')
+        self.assertIn('Pickup address', pickup_address_label.text)
+
+        # Paramedic sees a submit button that says 'Send to MSC'.
+        submit_button = self.browser.find_element_by_id('submit')
+        self.assertTrue(submit_button.is_displayed())
+        self.assertTrue(submit_button.get_attribute('type') == "submit")
+        self.assertIn('Send to MSC', submit_button.text)
+
+        # If text has been entered, paramedic can submit this field.
+        pickup_address_field.click()
+        pickup_address_field.send_keys('456 elm ave')
+        submit_button.click()
+        self.browser.implicitly_wait(5)
+
+        success_message = self.browser.find_element_by_id('success-message')
+        self.assertTrue(success_message.is_displayed())
+        self.assertIn('button was clicked', success_message)
+
+        # If text hasn't been entered, paramedic can't submit this field.
+
 
 if __name__ == '__main__':
     unittest.main()
