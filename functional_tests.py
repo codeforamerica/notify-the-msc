@@ -63,17 +63,34 @@ class NewVisitorTest(unittest.TestCase):
         self.assertIn('Send to MSC', submit_button.text)
 
         # If text has been entered, paramedic can submit this field.
+        error_box = self.browser.find_element_by_id('error-window')
+        success_message = self.browser.find_element_by_id('success-message')
+
         pickup_address_field.click()
         pickup_address_field.send_keys('456 elm ave')
         submit_button.click()
-        self.browser.implicitly_wait(5)
+        self.browser.implicitly_wait(3)
 
-        success_message = self.browser.find_element_by_id('success-message')
         self.assertTrue(success_message.is_displayed())
-        self.assertIn('button was clicked', success_message)
+        self.assertTrue(not error_box.is_displayed())
+        self.assertIn('Information successfully submitted', success_message.text)
 
-        # If text hasn't been entered, paramedic can't submit this field.
+    def test_can_load_page_and_error_on_no_address(self):
+        # Paramedic opens the app.
+        self.browser.get('http://localhost:5000')
 
+        # If address hasn't been entered, paramedic can't submit this field.
+        pickup_address_field = self.browser.find_element_by_name('pickup-address')
+        pickup_address_field.clear()
+        submit_button = self.browser.find_element_by_id('submit')
+        submit_button.click()
+        self.browser.implicitly_wait(3)
+        error_box = self.browser.find_element_by_id('error-window')
+        success_message = self.browser.find_element_by_id('success-message')
+
+        self.assertTrue(error_box.is_displayed())
+        self.assertTrue(not success_message.is_displayed())
+        self.assertIn("Please enter an address", error_box.text)
 
 if __name__ == '__main__':
     unittest.main()
