@@ -14,8 +14,9 @@ $(document).ready(function() {
         };
 
         $.ajax({
-            url: '/submit.json', 
+            url: '/incidents', 
             data: data_to_submit, 
+            method: 'POST',
             success: function(data) {
                 $('#success-message').show();
                 $('#error-window').hide();
