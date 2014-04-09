@@ -10,5 +10,5 @@ env:
   - secure: keMIQIlblnm5tFRHJZQ3zLcryFnL0tYd0qjBK56zJcVgXyba5nwpYyqoyhelPHctK0RiLSS9YyaOHoU/POHiQvXcbHvMJR2rUpA/WMQxWn3QNjxsq4zRexEhVSW+AS28hO0yk0UztLf24HginYjyKxFKGZyUKTAyv6/qsFyRxEU=
   - NOTIFY_TEST_REMOTE_BROWSER=YES
 before_script:
-  - curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash
+  - curl -L https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash
   - python main.py &
