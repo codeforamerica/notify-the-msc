@@ -4,6 +4,7 @@ import unittest
 import tempfile
 import json
 
+
 class SubmitTestCase(unittest.TestCase):
 
     def setUp(self):
@@ -18,7 +19,7 @@ class SubmitTestCase(unittest.TestCase):
         pass
 
     def test_valid_response_returns_ok(self):
-        rv = self.app.post("incidents", data=self.valid_submission )
+        rv = self.app.post("incidents", data=self.valid_submission)
 
         assert rv.status_code == 200
         assert json.loads(rv.data).get("status") == "ok"

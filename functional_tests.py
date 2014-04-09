@@ -4,7 +4,7 @@ import unittest
 import os
 
 remote_browser = False
-if 'NOTIFY_TEST_REMOTE_BROWSER' in os.environ and os.environ['NOTIFY_TEST_REMOTE_BROWSER'] == "YES":
+if os.environ.get('NOTIFY_TEST_REMOTE_BROWSER') == "YES":
     remote_browser = True
 
 SAUCE_USERNAME = os.environ.get('SAUCE_USERNAME')
@@ -16,6 +16,7 @@ hub_url = "%s:%s@localhost:4445" % (SAUCE_USERNAME, SAUCE_ACCESS_KEY)
 if 'TRAVIS_JOB_NUMBER' in os.environ:
     using_travis = True
     print "USING TRAVIS", hub_url
+
 
 class NewVisitorTest(unittest.TestCase):
 

@@ -19,6 +19,7 @@ app.config.from_object(config_to_use)
 def index():
     return render_template('index.html')
 
+
 @app.route("/incidents", methods=["POST"])
 def submit_incident():
     pickup_address = request.form.get('pickup_address', '')
