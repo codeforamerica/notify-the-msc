@@ -11,7 +11,7 @@ class SubmitTestCase(unittest.TestCase):
         self.app = main.app.test_client()
 
         self.valid_submission = {
-            "address": "123 elm ave"
+            "pickup_address": "123 elm ave"
         }
 
     def tearDown(self):
@@ -23,6 +23,17 @@ class SubmitTestCase(unittest.TestCase):
         assert rv.status_code == 200
         assert json.loads(rv.data).get("status") == "ok"
 
+    def test_response_with_empty_address_returns_error(self):
+        empty_address_submission = {
+            "pickup_address": ""
+        }
+
+        rv = self.app.post("incidents", data=empty_address_submission)
+        rv_dict = json.loads(rv.data)
+
+        assert rv.status_code == 400
+        assert rv_dict.get("status") == "error"
+        assert "empty_address" in rv_dict.get("errors")
 
 if __name__ == '__main__':
     unittest.main()
