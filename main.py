@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import render_template
+from flask import render_template, jsonify, request
 import os
 
 app = Flask(__name__)
@@ -18,6 +18,15 @@ app.config.from_object(config_to_use)
 @app.route("/")
 def index():
     return render_template('index.html')
+
+
+@app.route("/incidents", methods=["POST"])
+def submit_incident():
+    pickup_address = request.form.get('pickup_address', '')
+    if len(request.form.get('pickup_address')) == 0:
+        return jsonify(status="error", errors=["empty_address"]), 400
+
+    return jsonify(status="ok")
 
 if __name__ == "__main__":
     app.run()

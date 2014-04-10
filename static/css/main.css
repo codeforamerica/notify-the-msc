@@ -1,0 +1,114 @@
+#error-window {
+    display: none;
+}
+
+#success-message {
+    display: none;
+}
+
+/* @override http://local.notifythemsc.com/stylesheets/styles.css */
+
+body{
+    font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+}
+
+body, html{
+    margin: 0;
+    padding: 0;
+}
+
+#main{
+    margin: 0 auto;
+    background-color: #cecece;
+}
+
+h1{
+    background-color: #025bae;
+    color: #fff;
+    padding: 1em;
+    margin: 0 0 1em;
+}
+
+form .footer{
+    text-align: right;
+}
+
+
+form .footer button{
+    background-color: #f8ff00;
+    border: 1px solid #333;
+    padding: 1em 3em;
+    font: inherit;
+    font-weight: 600;
+    border-radius: 0.33em;
+    margin-right: 1.5em;
+    margin-bottom: 1.5em;
+}
+
+
+/* @group fieldset */
+
+fieldset{
+    border: none;
+    border-bottom: 2px solid white;
+    margin-bottom: 1em;
+    padding: 1em;
+}
+
+fieldset legend,
+.field.field-text-input label{
+    font-size: 1.25em;
+    font-weight: 600;
+}
+
+.field.field-text-input label{
+    display: block;
+    margin-left: 1em;
+    margin-bottom: 0.5em;
+}
+
+fieldset .field{
+    display: inline-block;
+    margin-right: 1.5em;
+}
+
+fieldset .field label{
+    background: white;
+    padding: 1em 4em;
+    display: block;
+    border-radius: 0.33em;
+    border: 1px solid #333;
+    transition: 0.2s;
+}
+
+fieldset .field input{
+    position: absolute;
+    left: -99999em;
+}
+
+fieldset .field label:hover,
+fieldset .field label:active{
+    background: #c3fdf9;
+}
+
+fieldset .field.field-active label{
+    background: #0ff;
+}
+
+/* @end */
+
+/* @group field text input */
+
+.field-text-input input{
+    display: block;
+    padding: 1em;
+    width: 90%;
+    margin-left: 2em;
+}
+
+.field-text-input p{
+    font-style: italic;
+    margin-left: 1.5em;
+}
+
+/* @end */
