@@ -6,8 +6,8 @@ $(document).ready(function() {
     }
 
     var show_success = function() {
-        $('#success-message').show();
         $('#error-window').hide();
+        $('#success-message').show();
     }
 
     $('button').click(function(e) {
@@ -26,8 +26,8 @@ $(document).ready(function() {
         };
 
         $.ajax({
-            url: '/incidents', 
-            data: data_to_submit, 
+            url: '/incidents',
+            data: data_to_submit,
             method: 'POST',
             success: function(data) {
                 show_success();
@@ -38,5 +38,5 @@ $(document).ready(function() {
         });
 
         return false;
-    }); 
+    });
 });
