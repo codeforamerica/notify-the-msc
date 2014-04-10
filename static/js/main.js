@@ -1,11 +1,23 @@
 $(document).ready(function() {
-    $('button').click(function() {
+    var show_error = function(msg) {
+        $('#success-message').hide();
+        $('#error-window').text(msg);
+        $('#error-window').show();
+    }
+
+    var show_success = function() {
+        $('#success-message').show();
+        $('#error-window').hide();
+    }
+
+    $('button').click(function(e) {
+        e.preventDefault(); // Don't submit the form via browser mechanism
+
         var pickup_address = $('#pickup-address-field').val();
 
+        // Show error if empty pickup address
         if (pickup_address == '') {
-            $('#error-window').text('Please enter an address.');
-            $('#error-window').show();
-            $('#success-message').hide();
+            show_error('Please enter an address.');
             return false;
         }
 
@@ -18,16 +30,12 @@ $(document).ready(function() {
             data: data_to_submit, 
             method: 'POST',
             success: function(data) {
-                $('#success-message').show();
-                $('#error-window').hide();
+                show_success();
             },
             error: function() {
-                $('#error-window').text("It looks like this didn't send. Try again?");
-                $('#error-window').show();
+                show_error("It looks like this didn't send. Try again?");
             }
         });
-        
-
 
         return false;
     }); 
