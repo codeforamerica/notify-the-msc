@@ -35,20 +35,17 @@ class NewVisitorTest(unittest.TestCase):
             self.browser = webdriver.Firefox()
         self.browser.implicitly_wait(3)
 
+        # Paramedic opens the app.
+        self.browser.get('http://localhost:5000')
+
     def tearDown(self):
         self.browser.quit()
 
     def test_can_load_page_and_see_title(self):
-        # Paramedic wants to report a rider to the MSC. They open this app.
-        self.browser.get('http://localhost:5000')
-
         # Paramedic sees that the page title mentions 'Notify the MSC'.
         self.assertIn('Notify the MSC', self.browser.title)
 
     def test_can_load_page_and_submit_valid_input(self):
-        # Paramedic opens the app.
-        self.browser.get('http://localhost:5000')
-
         # Paramedic sees this field.
         pickup_address_field = self.browser.find_element_by_name('pickup-address')
         self.assertTrue(pickup_address_field.is_displayed())
@@ -77,9 +74,6 @@ class NewVisitorTest(unittest.TestCase):
         self.assertIn('Information successfully submitted', success_message.text)
 
     def test_can_load_page_and_error_on_no_address(self):
-        # Paramedic opens the app.
-        self.browser.get('http://localhost:5000')
-
         # If address hasn't been entered, paramedic can't submit this field.
         pickup_address_field = self.browser.find_element_by_name('pickup-address')
         pickup_address_field.clear()
