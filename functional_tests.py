@@ -60,7 +60,7 @@ class NewVisitorTest(unittest.TestCase):
         self.assertTrue(submit_button.get_attribute('type') == "submit")
         self.assertIn('Send to MSC', submit_button.text)
 
-        # If text has been entered, paramedic can submit this field.
+        # If text has been entered for pickup address, paramedic can submit this field.
         error_box = self.browser.find_element_by_id('error-window')
         success_message = self.browser.find_element_by_id('success-message')
 
