@@ -46,11 +46,11 @@ class NewVisitorTest(unittest.TestCase):
         self.assertIn('Notify the MSC', self.browser.title)
 
     def test_can_load_page_and_submit_valid_input(self):
-        # Paramedic sees this field.
+        # Paramedic sees address field.
         pickup_address_field = self.browser.find_element_by_name('pickup-address')
         self.assertTrue(pickup_address_field.is_displayed())
 
-        # Paramedic sees that the field is labeled 'Pickup address.'
+        # Paramedic sees that address field is labeled 'Pickup address.'
         pickup_address_label = self.browser.find_element_by_id('pickup-address-label')
         self.assertIn('Pickup address', pickup_address_label.text)
 
@@ -72,6 +72,24 @@ class NewVisitorTest(unittest.TestCase):
         self.assertTrue(success_message.is_displayed())
         self.assertTrue(not error_box.is_displayed())
         self.assertIn('Information successfully submitted', success_message.text)
+
+    def test_hospital_field_input_works(self):
+        # Paramedic sees hospital field
+        hospital_field = self.browser.find_element_by_id('hospital-field')
+        self.assertTrue(hospital_field.is_displayed())
+
+        # Hospital field has an appropriate label
+        hospital_label = self.browser.find_element_by_xpath('//fieldset[@id="hospital-field"]/legend')
+        self.assertIn(hospital_label.text, "Hospital")
+
+        # Check that there's a button for Memorial
+        memorial_button = self.browser.find_element_by_id('hospital-memorial')
+        self.assertIn(memorial_button.text, "Memorial")
+
+        # Check that first element is active on load
+        first_el_xpath = '//fieldset[@id="hospital-field"]/div[1]'
+        hospital_field_div = self.browser.find_element_by_xpath(first_el_xpath)
+        self.assertIn("field-active", hospital_field_div.get_attribute('class'))
 
     def test_can_load_page_and_error_on_no_address(self):
         # If address hasn't been entered, paramedic can't submit this field.
