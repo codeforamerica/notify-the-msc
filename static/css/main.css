@@ -70,15 +70,15 @@ fieldset legend,
 fieldset .field{
     display: inline-block;
     margin-right: 1.5em;
+    zoom: 1;
+    *display: inline;
 }
 
 fieldset .field label{
     background: white;
     padding: 1em 4em;
     display: block;
-    border-radius: 0.33em;
     border: 1px solid #333;
-    transition: 0.2s;
 }
 
 fieldset .field input{
