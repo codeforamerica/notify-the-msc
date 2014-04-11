@@ -10,6 +10,7 @@ $(document).ready(function() {
         $('#success-message').show();
     }
 
+    // Handle submit button
     $('button').click(function(e) {
         e.preventDefault(); // Don't submit the form via browser mechanism
 
