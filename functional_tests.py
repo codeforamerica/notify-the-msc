@@ -46,7 +46,7 @@ class NewVisitorTest(unittest.TestCase):
         self.assertIn('Notify the MSC', self.browser.title)
 
     def test_can_load_page_and_submit_valid_input(self):
-        # Paramedic sees this field.
+        # Paramedic sees a field for pickup address.
         pickup_address_field = self.browser.find_element_by_name('pickup-address')
         self.assertTrue(pickup_address_field.is_displayed())
 
