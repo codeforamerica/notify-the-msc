@@ -111,5 +111,37 @@ class NewVisitorTest(unittest.TestCase):
         # Paramedic sees the option 'Other'.
         language_option_other = self.browser.find_element_by_id('language-other')
 
+    def test_can_submit_language_field(self):  #68918808
+        # If an option has been selected, paramedic can submit this field.
+        # @TODO: DRY. Maybe combine all of these into one function?
+        language_field = self.browser.find_element_by_name('language')
+        success_message = self.browser.find_element_by_id('success-message')
+
+        language_option_english = self.browser.find_element_by_id('language-english')
+        language_option_english.click()
+
+        # @TODO: DRY.
+        submit_button = self.browser.find_element_by_id('submit')
+        submit_button.click()   # Do you need to do this only once?
+        self.browser.implicitly_wait(3)
+
+        self.assertTrue(success_message.is_displayed())
+        self.assertTrue(not error_box.is_displayed())
+        self.assertIn('Information successfully submitted', success_message.text)
+
+    def test_can_error_on_no_language(self):
+        # If no language has been selected, paramedic can't submit this field.
+        language_field = self.browser.find_element_by_name('language')
+        language_field.clear()
+        submit_button = self.browser.find_element_by_id('submit')
+        submit_button.click()
+        self.browser.implicitly_wait(3)
+        error_box = self.browser.find_element_by_id('error-window')
+        success_message = self.browser.find_element_by_id('success-message')
+
+        self.assertTrue(error_box.is_displayed())
+        self.assertTrue(not success_message.is_displayed())
+        self.assertIn('Please select a language', error_box.text)
+
 if __name__ == '__main__':
     unittest.main()
