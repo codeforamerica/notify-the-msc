@@ -87,5 +87,29 @@ class NewVisitorTest(unittest.TestCase):
         self.assertTrue(not success_message.is_displayed())
         self.assertIn("Please enter an address", error_box.text)
 
+    def test_can_see_language_field(self):  #68918808
+        # @TODO: Decide whether to test for these being radio buttons, etc.
+        # @TODO: Figure out how to test the radio buttons' associated text.
+
+        # Paramedic sees that this field exists.
+        language_field = self.browser.find_element_by_name('language')
+        self.assertTrue(language_field.is_displayed())
+
+        # Paramedic sees that this field is labeled 'Language'.
+        language_field_label = self.browser.find_element_by_id('language-label')
+        self.assertIn('Language', language_field_label.text)
+
+        # Paramedic sees the option 'English'.
+        language_option_english = self.browser.find_element_by_id('language-english')
+
+        # Paramedic sees the option 'Spanish'.
+        language_option_spanish = self.browser.find_element_by_id('language-spanish')
+
+        # Paramedic sees the option 'Khmer'.
+        language_option_khmer = self.browser.find_element_by_id('language-khmer')
+
+        # Paramedic sees the option 'Other'.
+        language_option_other = self.browser.find_element_by_id('language-other')
+
 if __name__ == '__main__':
     unittest.main()
