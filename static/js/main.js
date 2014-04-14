@@ -10,6 +10,18 @@ $(document).ready(function() {
         $('#success-message').show();
     }
 
+    // Handle switching active fields
+    $('fieldset .field').click(function() {
+        var clicked_field = $(this);
+        var parent_fieldset = clicked_field.parent('fieldset');
+        
+        // Clear out the currently active field
+        parent_fieldset.find('.field').removeClass('field-active');
+
+        // Make the clicked field active
+        clicked_field.addClass('field-active');
+    });
+
     // Handle submit button
     $('button').click(function(e) {
         e.preventDefault(); // Don't submit the form via browser mechanism

@@ -88,8 +88,16 @@ class NewVisitorTest(unittest.TestCase):
 
         # Check that first element is active on load
         first_el_xpath = '//fieldset[@id="hospital-field"]/div[1]'
-        hospital_field_div = self.browser.find_element_by_xpath(first_el_xpath)
-        self.assertIn("field-active", hospital_field_div.get_attribute('class'))
+        first_field_div = self.browser.find_element_by_xpath(first_el_xpath)
+        self.assertIn("field-active", first_field_div.get_attribute('class'))
+
+        # Check that clicking a different element makes it active, and the first inactive
+        fourth_el_xpath = '//fieldset[@id="hospital-field"]/div[4]'
+        fourth_field_div = self.browser.find_element_by_xpath(fourth_el_xpath)
+        fourth_field_div.click()
+
+        self.assertIn("field-active", fourth_field_div.get_attribute('class'))
+        self.assertNotIn("field-active", first_field_div.get_attribute('class'))
 
     def test_can_load_page_and_error_on_no_address(self):
         # If address hasn't been entered, paramedic can't submit this field.
