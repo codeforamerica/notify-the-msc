@@ -39,8 +39,8 @@ $(document).ready(function() {
         }
 
         var hospital = getSelectedFieldValue($('#hospital-field'));
-        // Show error if empty hospital (shouldn't be possible in normal use)
-        if (pickup_address == '') {
+        // Show error if empty hospital
+        if (hospital == '') {
             show_error('Please select a hospital.');
             return false;
         }

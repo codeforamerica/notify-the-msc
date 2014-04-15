@@ -64,8 +64,14 @@ class NewVisitorTest(unittest.TestCase):
         error_box = self.browser.find_element_by_id('error-window')
         success_message = self.browser.find_element_by_id('success-message')
 
+        first_hospital_xpath = '//fieldset[@id="hospital-field"]/div[1]'
+        first_hospital_el = self.browser.find_element_by_xpath(first_hospital_xpath)
+
         pickup_address_field.click()
         pickup_address_field.send_keys('456 elm ave')
+
+        first_hospital_el.click()
+
         submit_button.click()
         self.browser.implicitly_wait(3)
 
@@ -86,18 +92,16 @@ class NewVisitorTest(unittest.TestCase):
         memorial_button = self.browser.find_element_by_id('hospital-memorial')
         self.assertIn(memorial_button.text, "Memorial")
 
-        # Check that first element is active on load
-        first_el_xpath = '//fieldset[@id="hospital-field"]/div[1]'
-        first_field_div = self.browser.find_element_by_xpath(first_el_xpath)
-        self.assertIn("field-active", first_field_div.get_attribute('class'))
+        # Check that no element is active on load
+        active_elements = hospital_field.find_elements_by_class_name('field-active')
+        self.assertEquals(0, len(active_elements))
 
-        # Check that clicking a different element makes it active, and the first inactive
+        # Check that clicking a different element makes it active
         fourth_el_xpath = '//fieldset[@id="hospital-field"]/div[4]'
         fourth_field_div = self.browser.find_element_by_xpath(fourth_el_xpath)
         fourth_field_div.click()
 
         self.assertIn("field-active", fourth_field_div.get_attribute('class'))
-        self.assertNotIn("field-active", first_field_div.get_attribute('class'))
 
     def test_can_load_page_and_error_on_no_address(self):
         # If address hasn't been entered, paramedic can't submit this field.
@@ -112,6 +116,24 @@ class NewVisitorTest(unittest.TestCase):
         self.assertTrue(error_box.is_displayed())
         self.assertTrue(not success_message.is_displayed())
         self.assertIn("Please enter an address", error_box.text)
+
+    def test_can_load_page_and_error_on_no_hospital(self):
+        pickup_address_field = self.browser.find_element_by_name('pickup-address')
+
+        pickup_address_field.click()
+        pickup_address_field.send_keys('456 elm ave')
+
+        submit_button = self.browser.find_element_by_id('submit')
+        submit_button.click()
+        self.browser.implicitly_wait(3)
+
+        error_box = self.browser.find_element_by_id('error-window')
+        success_message = self.browser.find_element_by_id('success-message')
+        
+        self.assertTrue(error_box.is_displayed())
+        self.assertTrue(not success_message.is_displayed())
+        self.assertIn("Please select a hospital", error_box.text)
+
 
 if __name__ == '__main__':
     unittest.main()
