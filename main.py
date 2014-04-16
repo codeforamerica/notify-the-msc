@@ -57,5 +57,24 @@ def build_email_from_incident(incident):
     html_email = html_email_template.render(incident=incident)
     return {"html": html_email, "text": text_email}
 
+def send_email_for_incident(incident):
+    if app.config['TESTING']:
+        return
+
+    email_body = build_email_from_incident(incident)
+    message = sendgrid.Mail()
+    message.add_to(app.config['EMAIL_RECIPIENT'])
+    message.set_subject('MSC ER Notification')
+    message.set_html(email_body['html'])
+    message.set_text(email_body['text'])
+    message.set_from('daniel@codeforamerica.org')
+
+    try:
+        sg.send(message)
+    except sendgrid.SendGridClientError as e:
+        print e  # @TODO: setup proper Python error logging
+    except sendgrid.SendGridServerError as e:
+        print e  # @TODO: setup proper Python error logging
+
 if __name__ == "__main__":
     app.run()

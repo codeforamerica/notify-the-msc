@@ -4,11 +4,12 @@ class Config(object):
 
 
 class ProductionConfig(Config):
-    pass
+    EMAIL_RECIPIENT = "daniel@codeforamerica.org"
 
 
 class DevelopmentConfig(Config):
     DEBUG = True
+    EMAIL_RECIPIENT = "daniel@codeforamerica.org"
 
 
 class TestingConfig(Config):
