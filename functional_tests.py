@@ -62,6 +62,10 @@ class NewVisitorTest(unittest.TestCase):
         interested_field = self.browser.find_element_by_id('interested-field')
         self.assertTrue(interested_field.is_displayed())
 
+        # Paramedic sees "homeless?" field
+        homeless_field = self.browser.find_element_by_id('homeless-field')
+        self.assertTrue(homeless_field.is_displayed())
+        
         # Paramedic sees a submit button that says 'Send to MSC'.
         submit_button = self.browser.find_element_by_id('submit')
         self.assertTrue(submit_button.is_displayed())
@@ -78,11 +82,15 @@ class NewVisitorTest(unittest.TestCase):
         first_interested_xpath = '//fieldset[@id="interested-field"]/div[1]'
         first_interested_el = self.browser.find_element_by_xpath(first_interested_xpath)
 
+        first_homeless_xpath = '//fieldset[@id="homeless-field"]/div[1]'
+        first_homeless_el = self.browser.find_element_by_xpath(first_homeless_xpath)
+
         pickup_address_field.click()
         pickup_address_field.send_keys('456 elm ave')
 
         first_hospital_el.click()
         first_interested_el.click()
+        first_homeless_el.click()
 
         submit_button.click()
         self.browser.implicitly_wait(3)
@@ -120,7 +128,7 @@ class NewVisitorTest(unittest.TestCase):
         interested_field = self.browser.find_element_by_id('interested-field')
         self.assertTrue(interested_field.is_displayed())
 
-        # Hospital field has an appropriate label
+        # Interested field has an appropriate label
         interested_label = self.browser.find_element_by_xpath('//fieldset[@id="interested-field"]/legend')
         self.assertIn(interested_label.text, "Is this person interested in talking to a caseworker?")
 
@@ -134,6 +142,30 @@ class NewVisitorTest(unittest.TestCase):
 
         # Check that clicking a different element makes it active
         second_el_xpath = '//fieldset[@id="interested-field"]/div[2]'
+        second_field_div = self.browser.find_element_by_xpath(second_el_xpath)
+        second_field_div.click()
+
+        self.assertIn("field-active", second_field_div.get_attribute('class'))
+
+    def test_homeless_field_input_works(self):
+        # Paramedic sees homeless field
+        homeless_field = self.browser.find_element_by_id('homeless-field')
+        self.assertTrue(homeless_field.is_displayed())
+
+        # Hospital field has an appropriate label
+        homeless_label = self.browser.find_element_by_xpath('//fieldset[@id="homeless-field"]/legend')
+        self.assertIn(homeless_label.text, "Is this person homeless?")
+
+        # Check that there's a button for Yes
+        yes_button = self.browser.find_element_by_id('homeless-yes')
+        self.assertIn(yes_button.text, "Yes")
+
+        # Check that no element is active on load
+        active_elements = homeless_field.find_elements_by_class_name('field-active')
+        self.assertEquals(0, len(active_elements))
+
+        # Check that clicking a different element makes it active
+        second_el_xpath = '//fieldset[@id="homeless-field"]/div[2]'
         second_field_div = self.browser.find_element_by_xpath(second_el_xpath)
         second_field_div.click()
 
@@ -188,6 +220,30 @@ class NewVisitorTest(unittest.TestCase):
         self.assertTrue(error_box.is_displayed())
         self.assertTrue(not success_message.is_displayed())
         self.assertIn("Please choose if the patient is interested in speaking with a caseworker.", error_box.text)
+
+    def test_can_load_page_and_error_on_no_homeless(self):
+        pickup_address_field = self.browser.find_element_by_name('pickup-address')
+
+        pickup_address_field.click()
+        pickup_address_field.send_keys('456 elm ave')
+
+        first_hospital_xpath = '//fieldset[@id="hospital-field"]/div[1]'
+        first_hospital_el = self.browser.find_element_by_xpath(first_hospital_xpath)
+        first_hospital_el.click()
+
+        first_interested_xpath = '//fieldset[@id="interested-field"]/div[1]'
+        first_interested_el = self.browser.find_element_by_xpath(first_interested_xpath)
+        first_interested_el.click()
+
+        submit_button = self.browser.find_element_by_id('submit')
+        submit_button.click()
+
+        error_box = self.browser.find_element_by_id('error-window')
+        success_message = self.browser.find_element_by_id('success-message')
+
+        self.assertTrue(error_box.is_displayed())
+        self.assertTrue(not success_message.is_displayed())
+        self.assertIn("Please choose if the patient is homeless.", error_box.text)
 
 if __name__ == '__main__':
     unittest.main()

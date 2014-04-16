@@ -52,11 +52,18 @@ $(document).ready(function() {
             return false;
         }
 
+        var homeless = getSelectedFieldValue($('#homeless-field'));
+        // Show error if empty "homeless?" field
+        if (homeless === '') {
+            show_error('Please choose if the patient is homeless.')
+            return false;
+        }
+
         data_to_submit = {
             pickup_address: pickup_address,
             hospital: hospital,
-            interested: interested
-
+            interested: interested,
+            homeless: homeless
         };
 
         $.ajax({

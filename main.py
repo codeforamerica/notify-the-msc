@@ -36,6 +36,9 @@ def submit_incident():
     if "interested" not in request.form:
         errors.append("missing_interested")
 
+    if "homeless" not in request.form:
+        errors.append("missing_homeless")
+
     if not errors:
         return jsonify(status="ok")
     else:
