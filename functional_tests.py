@@ -120,7 +120,7 @@ class NewVisitorTest(unittest.TestCase):
         interested_field = self.browser.find_element_by_id('interested-field')
         self.assertTrue(interested_field.is_displayed())
 
-        # Hospital field has an appropriate label
+        # Interested field has an appropriate label
         interested_label = self.browser.find_element_by_xpath('//fieldset[@id="interested-field"]/legend')
         self.assertIn(interested_label.text, "Is this person interested in talking to a caseworker?")
 
