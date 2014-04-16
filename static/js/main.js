@@ -3,12 +3,12 @@ $(document).ready(function() {
         $('#success-message').hide();
         $('#error-window').text(msg);
         $('#error-window').show();
-    }
+    };
 
     var show_success = function() {
         $('#error-window').hide();
         $('#success-message').show();
-    }
+    };
 
     // Handle switching active fields
     $('fieldset .field').click(function() {
@@ -24,7 +24,7 @@ $(document).ready(function() {
 
     // fetch active value from field
     function getSelectedFieldValue($fieldset) {
-        return $fieldset.find('.field-active label').text()
+        return $fieldset.find('.field-active label').text();
     }
 
     // Handle submit button
@@ -48,7 +48,7 @@ $(document).ready(function() {
         var interested = getSelectedFieldValue($('#interested-field'));
         // Show error if empty "interested?" field
         if (interested === '') {
-            show_error('Please choose if the patient is interested in speaking with a caseworker.')
+            show_error('Please choose if the patient is interested in speaking with a caseworker.');
             return false;
         }
 
@@ -56,7 +56,6 @@ $(document).ready(function() {
             pickup_address: pickup_address,
             hospital: hospital,
             interested: interested
-
         };
 
         $.ajax({
