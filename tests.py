@@ -75,5 +75,48 @@ class SubmitTestCase(unittest.TestCase):
         assert rv_dict.get("status") == "error"
         assert "missing_homeless" in rv_dict.get("errors")
 
+class EmailTestCase(unittest.TestCase):
+    def setUp(self):
+        main.app.config.from_object("config.TestingConfig")
+        self.app = main.app.test_client()
+
+        self.valid_incident = {
+            "pickup_address": "123 elm ave",
+            "hospital": "Memorial",
+            "interested": "No",
+            "homeless": "Yes",
+            "clothing": "pink polo",
+            "language": "English"
+        }
+
+    def tearDown(self):
+        pass
+
+    def test_build_email_from_incident_generates_html_and_text(self):
+        emails = main.build_email_from_incident(self.valid_incident)
+
+        self.assertIn('text', emails)
+        self.assertIn('html', emails)
+
+    def test_text_email_contains_all_required_info(self):
+        emails = main.build_email_from_incident(self.valid_incident)
+
+        self.assertIn('123 elm ave', emails['text'])
+        self.assertIn('Memorial', emails['text'])
+        self.assertIn('No', emails['text'])
+        self.assertIn('Yes', emails['text'])
+        self.assertIn('pink polo', emails['text'])
+        self.assertIn('English', emails['text'])
+
+    def test_html_email_contains_all_required_info(self):
+        emails = main.build_email_from_incident(self.valid_incident)
+
+        self.assertIn('123 elm ave', emails['html'])
+        self.assertIn('Memorial', emails['html'])
+        self.assertIn('No', emails['html'])
+        self.assertIn('Yes', emails['html'])
+        self.assertIn('pink polo', emails['html'])
+        self.assertIn('English', emails['html'])
+
 if __name__ == '__main__':
     unittest.main()

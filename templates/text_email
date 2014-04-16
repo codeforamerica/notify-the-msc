@@ -1,0 +1,8 @@
+Interested in caseworker: {{ incident.interested }}
+Known utilizer: {{ incident.superutilizer }}
+Homeless: {{ incident.homeless }}
+Clothing: {{ incident.clothing }}
+Language: {{ incident.language }}
+Hospital: {{ incident.hospital }}
+Homeless: {{ incident.homeless }}
+Pickup address: {{ incident.pickup_address }}

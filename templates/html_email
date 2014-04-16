@@ -1,0 +1,11 @@
+<html>
+<body>
+<p><strong>Interested in caseworker:</strong> {{ incident.interested }}</p>
+<p><strong>Known utilizer:</strong> {{ incident.superutilizer }}</p>
+<p><strong>Clothing:</strong> {{ incident.clothing }}</p>
+<p><strong>Homeless:</strong> {{ incident.homeless }}</p>
+<p><strong>Language:</strong> {{ incident.language }}</p>
+<p><strong>Hospital:</strong> {{ incident.hospital }}</p>
+<p><strong>Pickup address:</strong> {{ incident.pickup_address }}</p>
+</body>
+</html>
