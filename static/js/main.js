@@ -33,21 +33,21 @@ $(document).ready(function() {
 
         var pickup_address = $('#pickup-address-field').val();
         // Show error if empty pickup address
-        if (pickup_address == '') {
+        if (pickup_address === '') {
             show_error('Please enter an address.');
             return false;
         }
 
         var hospital = getSelectedFieldValue($('#hospital-field'));
         // Show error if empty hospital
-        if (hospital == '') {
+        if (hospital === '') {
             show_error('Please select a hospital.');
             return false;
         }
 
         var interested = getSelectedFieldValue($('#interested-field'));
         // Show error if empty "interested?" field
-        if (interested == '') {
+        if (interested === '') {
             show_error('Please choose if the patient is interested in speaking with a caseworker.')
             return false;
         }
