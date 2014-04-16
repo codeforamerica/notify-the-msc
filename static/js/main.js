@@ -45,10 +45,17 @@ $(document).ready(function() {
             return false;
         }
 
+        var interested = getSelectedFieldValue($('#interested-field'));
+        // Show error if empty "interested?" field
+        if (interested == '') {
+            show_error('Please choose if the patient is interested in speaking with a caseworker.')
+            return false;
+        }
 
         data_to_submit = {
             pickup_address: pickup_address,
-            hospital: hospital
+            hospital: hospital,
+            interested: interested
 
         };
 

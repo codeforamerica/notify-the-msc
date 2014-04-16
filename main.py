@@ -33,6 +33,9 @@ def submit_incident():
     if "hospital" not in request.form:
         errors.append("missing_hospital")
 
+    if "interested" not in request.form:
+        errors.append("missing_interested")
+
     if not errors:
         return jsonify(status="ok")
     else:

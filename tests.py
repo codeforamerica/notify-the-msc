@@ -13,7 +13,8 @@ class SubmitTestCase(unittest.TestCase):
 
         self.valid_submission = {
             "pickup_address": "123 elm ave",
-            "hospital": "memorial"
+            "hospital": "memorial",
+            "interested": "No"
         }
 
     def tearDown(self):
@@ -48,6 +49,18 @@ class SubmitTestCase(unittest.TestCase):
         assert rv.status_code == 400
         assert rv_dict.get("status") == "error"
         assert "missing_hospital" in rv_dict.get("errors")
+
+    def test_response_without_interested_returns_error(self):
+        missing_interested_submission = self.valid_submission.copy()
+
+        del missing_interested_submission["interested"]
+
+        rv = self.app.post("incidents", data=missing_interested_submission)
+        rv_dict = json.loads(rv.data)
+
+        assert rv.status_code == 400
+        assert rv_dict.get("status") == "error"
+        assert "missing_interested" in rv_dict.get("errors")
 
 if __name__ == '__main__':
     unittest.main()
