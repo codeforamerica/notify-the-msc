@@ -22,7 +22,7 @@ def index():
 
 @app.route("/incidents", methods=["POST"])
 def submit_incident():
-    errors = [] # list of all errors
+    errors = []  # list of all errors
 
     # verify pickup address not empty
     pickup_address = request.form.get('pickup_address', '')
