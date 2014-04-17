@@ -73,6 +73,16 @@ class NewVisitorTest(unittest.TestCase):
         self.assertTrue(not error_box.is_displayed())
         self.assertIn('Information successfully submitted', success_message.text)
 
+    def test_can_see_clothing_description_field(self):  #68918872
+        # Paramedic sees that this field exists.
+        clothing_field = self.browser.find_element_by_name('clothing')
+        self.assertTrue(clothing_field.is_displayed())
+
+        # Paramedic sees that this field is labeled 'Clothing description'.
+#        clothing_field_label = self.browser.find_element_by_id('clothing-label')
+#        self.assertIn('Clothing description', clothing_field_label.text)
+
+
     def test_can_load_page_and_error_on_no_address(self):
         # If address hasn't been entered, paramedic can't submit this field.
         pickup_address_field = self.browser.find_element_by_name('pickup-address')
