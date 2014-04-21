@@ -14,7 +14,7 @@ $(document).ready(function() {
     $('fieldset .field').click(function() {
         var clicked_field = $(this);
         var parent_fieldset = clicked_field.parent('fieldset');
-        
+
         // Clear out the currently active field
         parent_fieldset.find('.field').removeClass('field-active');
 
@@ -38,6 +38,13 @@ $(document).ready(function() {
             return false;
         }
 
+        var language = getSelectedFieldValue($('#language-field'));
+        // Show error if empty language
+        if (language == '') {
+            show_error('Please select a language.');
+            return false;
+        }
+
         var hospital = getSelectedFieldValue($('#hospital-field'));
         // Show error if empty hospital
         if (hospital === '') {
@@ -55,7 +62,8 @@ $(document).ready(function() {
         data_to_submit = {
             pickup_address: pickup_address,
             hospital: hospital,
-            interested: interested
+            interested: interested,
+            language: language,
         };
 
         $.ajax({
