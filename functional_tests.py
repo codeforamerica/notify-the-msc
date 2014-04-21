@@ -65,7 +65,7 @@ class NewVisitorTest(unittest.TestCase):
         # Paramedic sees a language field -- covered in a test below.
 
         # Activate a sample language.
-        fourth_el_xpath = '//fieldset[@id="language-field"]/div[3]'
+        fourth_el_xpath = '//fieldset[@id="language-field"]/div[4]'
         fourth_field_div = self.browser.find_element_by_xpath(fourth_el_xpath)
         fourth_field_div.click()
 
@@ -180,7 +180,7 @@ class NewVisitorTest(unittest.TestCase):
         self.assertEquals(0, len(active_elements))
 
         # Check that clicking a different element makes it active
-        fourth_el_xpath = '//fieldset[@id="language-field"]/div[3]'
+        fourth_el_xpath = '//fieldset[@id="language-field"]/div[4]'
         fourth_field_div = self.browser.find_element_by_xpath(fourth_el_xpath)
         fourth_field_div.click()
 
