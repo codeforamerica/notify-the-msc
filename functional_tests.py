@@ -46,6 +46,8 @@ class NewVisitorTest(unittest.TestCase):
         self.assertIn('Notify the MSC', self.browser.title)
 
     def test_can_load_page_and_submit_valid_input(self):
+        # @todo: Refactor this test.
+
         # Paramedic sees this field.
         pickup_address_field = self.browser.find_element_by_name('pickup-address')
         self.assertTrue(pickup_address_field.is_displayed())
@@ -60,7 +62,14 @@ class NewVisitorTest(unittest.TestCase):
         self.assertTrue(submit_button.get_attribute('type') == "submit")
         self.assertIn('Send to MSC', submit_button.text)
 
-        # If text has been entered, paramedic can submit this field.
+        # Paramedic sees a language field -- covered in a test below.
+
+        # Activate a sample language.
+        fourth_el_xpath = '//fieldset[@id="language-field"]/div[3]'
+        fourth_field_div = self.browser.find_element_by_xpath(fourth_el_xpath)
+        fourth_field_div.click()
+
+        # If text has been entered, paramedic can submit this form.
         error_box = self.browser.find_element_by_id('error-window')
         success_message = self.browser.find_element_by_id('success-message')
 
@@ -88,60 +97,83 @@ class NewVisitorTest(unittest.TestCase):
         self.assertIn("Please enter an address", error_box.text)
 
     def test_can_see_language_field(self):  #68918808
-        # @TODO: Decide whether to test for these being radio buttons, etc.
-        # @TODO: Figure out how to test the radio buttons' associated text.
-
-        # Paramedic sees that this field exists.
-        language_field = self.browser.find_element_by_name('language')
+        # Paramedic sees language field
+        language_field = self.browser.find_element_by_id('language-field')
         self.assertTrue(language_field.is_displayed())
 
-        # Paramedic sees that this field is labeled 'Language'.
-        language_field_label = self.browser.find_element_by_id('language-label')
-        self.assertIn('Language', language_field_label.text)
+        # Language field has an appropriate label
+        language_label = self.browser.find_element_by_xpath('//fieldset[@id="language-field"]/legend')
+        self.assertIn(language_label.text, "Language")
 
         # Paramedic sees the option 'English'.
-        language_option_english = self.browser.find_element_by_id('language-english')
+        english_button = self.browser.find_element_by_id('language-english')
+        self.assertIn(english_button.text, "English")
 
         # Paramedic sees the option 'Spanish'.
-        language_option_spanish = self.browser.find_element_by_id('language-spanish')
+        spanish_button = self.browser.find_element_by_id('language-spanish')
+        self.assertIn(spanish_button.text, "Spanish")
 
         # Paramedic sees the option 'Khmer'.
-        language_option_khmer = self.browser.find_element_by_id('language-khmer')
+        khmer_button = self.browser.find_element_by_id('language-khmer')
+        self.assertIn(khmer_button.text, "Khmer")
+
+        # Paramedic sees the option 'Tagalog'.
+        tagalog_button = self.browser.find_element_by_id('language-tagalog')
+        self.assertIn(tagalog_button.text, "Tagalog")
 
         # Paramedic sees the option 'Other'.
-        language_option_other = self.browser.find_element_by_id('language-other')
+        other_button = self.browser.find_element_by_id('language-other')
+        self.assertIn(other_button.text, "Other")
+
+        # Check that no element is active on load
+        active_elements = language_field.find_elements_by_class_name('field-active')
+        self.assertEquals(0, len(active_elements))
+
+        # Check that clicking a different element makes it active
+        fourth_el_xpath = '//fieldset[@id="language-field"]/div[3]'
+        fourth_field_div = self.browser.find_element_by_xpath(fourth_el_xpath)
+        fourth_field_div.click()
+
+        self.assertIn("field-active", fourth_field_div.get_attribute('class'))
 
     def test_can_submit_language_field(self):  #68918808
         # If an option has been selected, paramedic can submit this field.
         # @TODO: DRY. Maybe combine all of these into one function?
-        language_field = self.browser.find_element_by_name('language')
-        success_message = self.browser.find_element_by_id('success-message')
 
-        language_option_english = self.browser.find_element_by_id('language-english')
-        language_option_english.click()
+        language_field = self.browser.find_element_by_id('language-field')
 
-        # @TODO: DRY.
-        submit_button = self.browser.find_element_by_id('submit')
-        submit_button.click()   # Do you need to do this only once?
-        self.browser.implicitly_wait(3)
+        # Check that no element is active on load
+        active_elements = language_field.find_elements_by_class_name('field-active')
+        self.assertEquals(0, len(active_elements))
 
-        self.assertTrue(success_message.is_displayed())
-        self.assertTrue(not error_box.is_displayed())
-        self.assertIn('Information successfully submitted', success_message.text)
+        # Check that clicking a different element makes it active
+        fourth_el_xpath = '//fieldset[@id="language-field"]/div[3]'
+        fourth_field_div = self.browser.find_element_by_xpath(fourth_el_xpath)
+        fourth_field_div.click()
 
-    def test_can_error_on_no_language(self):
+        self.assertIn('field-active', fourth_field_div.get_attribute('class'))
+
+    def test_can_load_page_and_error_on_no_language(self):  #68918808
+        # @todo: Refactor to use deselectByIndex or deselectByValue instead of filling out everything else?
+        # @todo: DRY.
         # If no language has been selected, paramedic can't submit this field.
-        language_field = self.browser.find_element_by_name('language')
-        language_field.clear()
+        pickup_address_field = self.browser.find_element_by_name('pickup-address')
+
+        pickup_address_field.click()
+        pickup_address_field.send_keys('456 elm ave')
+
+        # @todo: Add hospital element once you've merged it.
+
         submit_button = self.browser.find_element_by_id('submit')
         submit_button.click()
         self.browser.implicitly_wait(3)
+
         error_box = self.browser.find_element_by_id('error-window')
         success_message = self.browser.find_element_by_id('success-message')
 
         self.assertTrue(error_box.is_displayed())
         self.assertTrue(not success_message.is_displayed())
-        self.assertIn('Please select a language', error_box.text)
+        self.assertIn("Please select a language", error_box.text)
 
 if __name__ == '__main__':
     unittest.main()
