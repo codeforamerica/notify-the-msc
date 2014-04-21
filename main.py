@@ -64,10 +64,10 @@ def send_email_for_incident(incident):
     email_body = build_email_from_incident(incident)
     message = sendgrid.Mail()
     message.add_to(app.config['EMAIL_RECIPIENT'])
-    message.set_subject('MSC ER Notification')
+    message.set_subject('*ER Alert*')
     message.set_html(email_body['html'])
     message.set_text(email_body['text'])
-    message.set_from('daniel@codeforamerica.org')
+    message.set_from('ER Alert <longbeach@codeforamerica.org>')
 
     try:
         sg.send(message)
