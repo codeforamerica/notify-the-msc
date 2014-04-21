@@ -15,17 +15,39 @@
                     <input id="pickup-address-field" name="pickup-address" type="text">
                     <p>Example: 1301 w 12th st</p>
                 </div>
-                <div class="field field-radio-input">
-                  <label id="language-label">Language</label>
-                    <input type="radio" name="language" id="language-english" value="english" />
+                <fieldset id="language-field">
+                  <legend id="language-label">Language</legend>
+                  <div class="field field-radio-input">
+                    <label for="language-english">
                       English
-                    <input type="radio" name="language" id="language-spanish" value="spanish" />
+                      <input type="radio" name="language" id="language-english"></input>
+                    </label>
+                  </div>
+                  <div class="field field-radio-input">
+                    <label for="language-spanish">
                       Spanish
-                    <input type="radio" name="language" id="language-khmer" value="khmer" />
+                     <input type="radio" name="language" id="language-spanish"></input>
+                    </label>
+                  </div>
+                  <div class="field field-radio-input">
+                    <label for="language-khmer">
                       Khmer
-                    <input type="radio" name="language" id="language-other" value="other" />
+                      <input type="radio" name="language" id="language-khmer"></input>
+                    </label>
+                  </div>
+                  <div class="field field-radio-input">
+                    <label for="language-tagalog">
+                      Tagalog
+                      <input type="radio" name="language" id="language-tagalog"></input>
+                    </label>
+                  </div>
+                  <div class="field field-radio-input">
+                    <label for="language-other">
                       Other
-                </div>
+                      <input type="radio" name="language" id="language-other"></input>
+                    </label>
+                  </div>
+                </fieldset>
                 <!--
                 <fieldset>
                   <legend>Have you seen this person before?</legend>
