@@ -1,5 +1,8 @@
+# Development
 ENV/
 .env/
+.floo
+.flooignore
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

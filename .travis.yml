@@ -2,12 +2,20 @@ language: python
 python:
 - '2.7'
 install: pip install -r requirements.txt
-script: python functional_tests.py
+script:
+- python functional_tests.py
+- python tests.py
 env:
   global:
   - secure: qexVO6+laHbnAYBrB1T8vSSsXEh6G6/hWX9WeWHYk4U0ePFCbUsNPEc9j4TsiN7um/3cYbKtEMYEaBLsVsJg/ozazNoIqLzN1xgjUUwVlGDWyyARVEzwruP2WvwihiDdRZ3HwoQvQ/bwbUCxRxyXRo013jK3coltAyxeJx0XA3o=
   - secure: keMIQIlblnm5tFRHJZQ3zLcryFnL0tYd0qjBK56zJcVgXyba5nwpYyqoyhelPHctK0RiLSS9YyaOHoU/POHiQvXcbHvMJR2rUpA/WMQxWn3QNjxsq4zRexEhVSW+AS28hO0yk0UztLf24HginYjyKxFKGZyUKTAyv6/qsFyRxEU=
   - NOTIFY_TEST_REMOTE_BROWSER=YES
 before_script:
-  - curl -L https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash
-  - python main.py &
+- curl -L https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash
+- python main.py &
+deploy:
+  provider: heroku
+  api_key:
+    secure: NqU8lmBBZ9T3vud0Vgo6BxnjdQxNpzyP2BHIUYiXXORaa9HIROmOhcbrSu7dcTNlT04Ux+F9eaDhHp4ybznopuCKgBcjFCi5xzahidSbudIF5yuGUOjJGE2Cwl36wbtNutQ7cOTGMLzS3mj1C2fL1ml3/1N529B0nmJCmHTozB0=
+  app: notify-the-msc-staging
+  on: master

@@ -32,7 +32,6 @@ $(document).ready(function() {
         e.preventDefault(); // Don't submit the form via browser mechanism
 
         var pickup_address = $('#pickup-address-field').val();
-
         // Show error if empty pickup address
         if (pickup_address == '') {
             show_error('Please enter an address.');
@@ -46,9 +45,17 @@ $(document).ready(function() {
             return false;
         }
 
+        var hospital = getSelectedFieldValue($('#hospital-field'));
+        // Show error if empty hospital
+        if (hospital == '') {
+            show_error('Please select a hospital.');
+            return false;
+        }
+
         data_to_submit = {
             pickup_address: pickup_address,
-            language: language
+            language: language,
+            hospital: hospital
         };
 
         $.ajax({
