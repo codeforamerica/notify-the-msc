@@ -92,6 +92,26 @@ class NewVisitorTest(unittest.TestCase):
         memorial_button = self.browser.find_element_by_id('hospital-memorial')
         self.assertIn(memorial_button.text, "Memorial")
 
+        # Check that there's a button for St. Mary's
+        st_marys_button = self.browser.find_element_by_id('hospital-st-marys')
+        self.assertIn(st_marys_button.text, "St. Mary's")
+
+        # Check that there's a button for Community
+        community_button = self.browser.find_element_by_id('hospital-community')
+        self.assertIn(community_button.text, "Community")
+
+        # Check that there's a button for College (Pacific)
+        college_button = self.browser.find_element_by_id('hospital-college')
+        self.assertIn(college_button.text, "College (Pacific)")
+
+        # Check that there's a button for Lakewood
+        lakewood_button = self.browser.find_element_by_id('hospital-lakewood')
+        self.assertIn(lakewood_button.text, "Lakewood")
+
+        # Check that there's a button for Other
+        other_button = self.browser.find_element_by_id('hospital-other')
+        self.assertIn(other_button.text, "Other")
+
         # Check that no element is active on load
         active_elements = hospital_field.find_elements_by_class_name('field-active')
         self.assertEquals(0, len(active_elements))
