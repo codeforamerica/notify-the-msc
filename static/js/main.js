@@ -59,10 +59,18 @@ $(document).ready(function() {
             return false;
         }
 
+        var superutilizer = getSelectedFieldValue($('#superutilizer-field'));
+        // Show error if empty "superutilizer?" field
+        if (superutilizer === '') {
+            show_error('Please select whether the patient is a frequent EMS utilizer.');
+            return false;
+        }
+
         data_to_submit = {
             pickup_address: pickup_address,
             hospital: hospital,
             interested: interested,
+            superutilizer: superutilizer,
             language: language
         };
 
