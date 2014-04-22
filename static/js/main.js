@@ -62,7 +62,7 @@ $(document).ready(function() {
         var homeless = getSelectedFieldValue($('#homeless-field'));
         // Show error if empty "homeless?" field
         if (homeless === '') {
-            show_error('Please choose if the patient is homeless.')
+            show_error('Please select whether the patient is homeless.')
             return false;
         }
 

@@ -388,7 +388,7 @@ class NewVisitorTest(unittest.TestCase):
 
         self.assertTrue(error_box.is_displayed())
         self.assertTrue(not success_message.is_displayed())
-        self.assertIn("Please choose if the patient is homeless.", error_box.text)
+        self.assertIn("Please select whether the patient is homeless.", error_box.text)
 
 if __name__ == '__main__':
     unittest.main()
