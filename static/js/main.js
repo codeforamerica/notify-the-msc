@@ -62,7 +62,14 @@ $(document).ready(function() {
         var homeless = getSelectedFieldValue($('#homeless-field'));
         // Show error if empty "homeless?" field
         if (homeless === '') {
-            show_error('Please select whether the patient is homeless.')
+            show_error('Please select whether the patient is homeless.');
+            return false;
+        }
+
+        var superutilizer = getSelectedFieldValue($('#superutilizer-field'));
+        // Show error if empty "superutilizer?" field
+        if (superutilizer === '') {
+            show_error('Please select whether the patient is a frequent EMS utilizer.');
             return false;
         }
 
@@ -71,6 +78,7 @@ $(document).ready(function() {
             hospital: hospital,
             interested: interested,
             homeless: homeless,
+            superutilizer: superutilizer,
             language: language
         };
 
