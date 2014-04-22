@@ -62,7 +62,7 @@ $(document).ready(function() {
         var superutilizer = getSelectedFieldValue($('#superutilizer-field'));
         // Show error if empty "superutilizer?" field
         if (superutilizer === '') {
-            show_error('Please choose if the patient is a frequent EMS utilizer.');
+            show_error('Please select whether the patient is a frequent EMS utilizer.');
             return false;
         }
 
