@@ -3,18 +3,18 @@ $(document).ready(function() {
         $('#success-message').hide();
         $('#error-window').text(msg);
         $('#error-window').show();
-    }
+    };
 
     var show_success = function() {
         $('#error-window').hide();
         $('#success-message').show();
-    }
+    };
 
     // Handle switching active fields
     $('fieldset .field').click(function() {
         var clicked_field = $(this);
         var parent_fieldset = clicked_field.parent('fieldset');
-        
+
         // Clear out the currently active field
         parent_fieldset.find('.field').removeClass('field-active');
 
@@ -24,7 +24,7 @@ $(document).ready(function() {
 
     // fetch active value from field
     function getSelectedFieldValue($fieldset) {
-        return $fieldset.find('.field-active label').text()
+        return $fieldset.find('.field-active label').text();
     }
 
     // Handle submit button
@@ -38,6 +38,13 @@ $(document).ready(function() {
             return false;
         }
 
+        var language = getSelectedFieldValue($('#language-field'));
+        // Show error if empty language
+        if (language == '') {
+            show_error('Please select a language.');
+            return false;
+        }
+
         var hospital = getSelectedFieldValue($('#hospital-field'));
         // Show error if empty hospital
         if (hospital === '') {
@@ -48,7 +55,7 @@ $(document).ready(function() {
         var interested = getSelectedFieldValue($('#interested-field'));
         // Show error if empty "interested?" field
         if (interested === '') {
-            show_error('Please choose if the patient is interested in speaking with a caseworker.')
+            show_error('Please indicate whether the patient is interested in speaking with a caseworker.');
             return false;
         }
 
@@ -63,7 +70,8 @@ $(document).ready(function() {
             pickup_address: pickup_address,
             hospital: hospital,
             interested: interested,
-            homeless: homeless
+            homeless: homeless,
+            language: language
         };
 
         $.ajax({
