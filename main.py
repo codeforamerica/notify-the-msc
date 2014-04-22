@@ -15,9 +15,13 @@ if 'MSC_NOTIFIER_ENVIRONMENT' in os.environ:
 
 app.config.from_object(config_to_use)
 
-sg_username = os.environ['SENDGRID_USERNAME']
-sg_password = os.environ['SENDGRID_PASSWORD']
-sg = sendgrid.SendGridClient(sg_username, sg_password, raise_errors=True)
+try:
+    sg_username = os.environ['SENDGRID_USERNAME']
+    sg_password = os.environ['SENDGRID_PASSWORD']
+    sg = sendgrid.SendGridClient(sg_username, sg_password, raise_errors=True)
+except Exception as e:
+    print "Missing SendGrid Config"
+    raise e
 
 @app.route("/")
 def index():
