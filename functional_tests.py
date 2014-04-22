@@ -193,6 +193,14 @@ class NewVisitorTest(unittest.TestCase):
         yes_button = self.browser.find_element_by_id('superutilizer-yes')
         self.assertIn(yes_button.text, "Yes")
 
+        # Check that there's a button for No
+        no_button = self.browser.find_element_by_id('superutilizer-no')
+        self.assertIn(no_button.text, "No")
+
+        # Check that there's a button for Unsure
+        unsure_button = self.browser.find_element_by_id('superutilizer-unsure')
+        self.assertIn(unsure_button.text, "Unsure")
+
         # Check that no element is active on load
         active_elements = superutilizer_field.find_elements_by_class_name('field-active')
         self.assertEquals(0, len(active_elements))
@@ -362,6 +370,10 @@ class NewVisitorTest(unittest.TestCase):
         first_interested_xpath = '//fieldset[@id="interested-field"]/div[1]'
         first_interested_el = self.browser.find_element_by_xpath(first_interested_xpath)
         first_interested_el.click()
+
+        fourth_el_xpath = '//fieldset[@id="language-field"]/div[4]'
+        fourth_field_div = self.browser.find_element_by_xpath(fourth_el_xpath)
+        fourth_field_div.click()
 
         submit_button = self.browser.find_element_by_id('submit')
         submit_button.click()
