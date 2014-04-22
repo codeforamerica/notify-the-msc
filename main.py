@@ -22,11 +22,21 @@ def index():
 
 @app.route("/incidents", methods=["POST"])
 def submit_incident():
+    errors = [] # list of all errors
+
+    # verify pickup address not empty
     pickup_address = request.form.get('pickup_address', '')
     if len(request.form.get('pickup_address')) == 0:
-        return jsonify(status="error", errors=["empty_address"]), 400
+        errors.append("empty_address")
 
-    return jsonify(status="ok")
+    # verify hospital given
+    if "hospital" not in request.form:
+        errors.append("missing_hospital")
+
+    if not errors:
+        return jsonify(status="ok")
+    else:
+        return jsonify(status="error", errors=errors), 400
 
 if __name__ == "__main__":
     app.run()
