@@ -63,7 +63,7 @@ $(document).ready(function() {
             pickup_address: pickup_address,
             hospital: hospital,
             interested: interested,
-            language: language,
+            language: language
         };
 
         $.ajax({
