@@ -3,12 +3,12 @@ $(document).ready(function() {
         $('#success-message').hide();
         $('#error-window').text(msg);
         $('#error-window').show();
-    }
+    };
 
     var show_success = function() {
         $('#error-window').hide();
         $('#success-message').show();
-    }
+    };
 
     // Handle switching active fields
     $('fieldset .field').click(function() {
@@ -24,7 +24,7 @@ $(document).ready(function() {
 
     // fetch active value from field
     function getSelectedFieldValue($fieldset) {
-        return $fieldset.find('.field-active label').text()
+        return $fieldset.find('.field-active label').text();
     }
 
     // Handle submit button
@@ -33,7 +33,7 @@ $(document).ready(function() {
 
         var pickup_address = $('#pickup-address-field').val();
         // Show error if empty pickup address
-        if (pickup_address == '') {
+        if (pickup_address === '') {
             show_error('Please enter an address.');
             return false;
         }
@@ -47,15 +47,23 @@ $(document).ready(function() {
 
         var hospital = getSelectedFieldValue($('#hospital-field'));
         // Show error if empty hospital
-        if (hospital == '') {
+        if (hospital === '') {
             show_error('Please select a hospital.');
+            return false;
+        }
+
+        var interested = getSelectedFieldValue($('#interested-field'));
+        // Show error if empty "interested?" field
+        if (interested === '') {
+            show_error('Please indicate whether the patient is interested in speaking with a caseworker.');
             return false;
         }
 
         data_to_submit = {
             pickup_address: pickup_address,
-            language: language,
-            hospital: hospital
+            hospital: hospital,
+            interested: interested,
+            language: language
         };
 
         $.ajax({
