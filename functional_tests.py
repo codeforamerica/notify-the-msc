@@ -157,6 +157,14 @@ class NewVisitorTest(unittest.TestCase):
         yes_button = self.browser.find_element_by_id('interested-yes')
         self.assertIn(yes_button.text, "Yes")
 
+        # Check that there's a button for No
+        yes_button = self.browser.find_element_by_id('interested-no')
+        self.assertIn(yes_button.text, "No")
+
+        # Check that there's a button for Unsure
+        yes_button = self.browser.find_element_by_id('interested-unsure')
+        self.assertIn(yes_button.text, "Unsure")
+
         # Check that no element is active on load
         active_elements = interested_field.find_elements_by_class_name('field-active')
         self.assertEquals(0, len(active_elements))
