@@ -294,6 +294,11 @@ class NewVisitorTest(unittest.TestCase):
         pickup_address_field.click()
         pickup_address_field.send_keys('456 elm ave')
 
+        # Select a language.
+        fourth_el_xpath = '//fieldset[@id="language-field"]/div[4]'
+        fourth_field_div = self.browser.find_element_by_xpath(fourth_el_xpath)
+        fourth_field_div.click()
+
         first_hospital_xpath = '//fieldset[@id="hospital-field"]/div[1]'
         first_hospital_el = self.browser.find_element_by_xpath(first_hospital_xpath)
         first_hospital_el.click()
@@ -306,7 +311,7 @@ class NewVisitorTest(unittest.TestCase):
 
         self.assertTrue(error_box.is_displayed())
         self.assertTrue(not success_message.is_displayed())
-        self.assertIn("Please choose if the patient is interested in speaking with a caseworker.", error_box.text)
+        self.assertIn("Please indicate whether the patient is interested in speaking with a caseworker.", error_box.text)
 
 if __name__ == '__main__':
     unittest.main()

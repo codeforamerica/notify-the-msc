@@ -55,7 +55,7 @@ $(document).ready(function() {
         var interested = getSelectedFieldValue($('#interested-field'));
         // Show error if empty "interested?" field
         if (interested === '') {
-            show_error('Please choose if the patient is interested in speaking with a caseworker.');
+            show_error('Please indicate whether the patient is interested in speaking with a caseworker.');
             return false;
         }
 
