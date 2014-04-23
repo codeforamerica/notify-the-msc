@@ -14,6 +14,7 @@ class SubmitTestCase(unittest.TestCase):
         self.valid_submission = {
             "pickup_address": "123 elm ave",
             "hospital": "memorial",
+            "language": "Khmer",
             "interested": "No",
             "superutilizer": "Yes"
         }
@@ -50,6 +51,18 @@ class SubmitTestCase(unittest.TestCase):
         assert rv.status_code == 400
         assert rv_dict.get("status") == "error"
         assert "missing_hospital" in rv_dict.get("errors")
+
+    def test_response_without_language_returns_error(self):
+        missing_language_submission = self.valid_submission.copy()
+
+        del missing_language_submission["language"]
+
+        rv = self.app.post("incidents", data=missing_language_submission)
+        rv_dict = json.loads(rv.data)
+
+        assert rv.status_code == 400
+        assert rv_dict.get("status") == "error"
+        assert "missing_language" in rv_dict.get("errors")
 
     def test_response_without_interested_returns_error(self):
         missing_interested_submission = self.valid_submission.copy()

@@ -33,6 +33,9 @@ def submit_incident():
     if "hospital" not in request.form:
         errors.append("missing_hospital")
 
+    if "language" not in request.form:
+        errors.append("missing_language")
+
     if "interested" not in request.form:
         errors.append("missing_interested")
 
