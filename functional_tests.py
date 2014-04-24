@@ -252,7 +252,7 @@ class NewVisitorTest(unittest.TestCase):
 
         self.assertIn("field-active", second_field_div.get_attribute('class'))
 
-    def test_can_load_page_and_error_on_no_address(self):
+    def test_can_load_page_and_error_on_missing_address(self):
         # If address hasn't been entered, paramedic can't submit this field.
         pickup_address_field = self.browser.find_element_by_name('pickup-address')
         pickup_address_field.clear()
@@ -323,7 +323,7 @@ class NewVisitorTest(unittest.TestCase):
 
         self.assertIn('field-active', fourth_field_div.get_attribute('class'))
 
-    def test_can_load_page_and_error_on_no_language(self):  #68918808
+    def test_can_load_page_and_error_on_missing_language(self):  #68918808
         # @todo: Refactor to use deselectByIndex or deselectByValue instead of filling out everything else?
         # @todo: DRY.
         # If no language has been selected, paramedic can't submit this field.
@@ -350,7 +350,7 @@ class NewVisitorTest(unittest.TestCase):
 
         self.assertIn("Please select a language", error_box.text)
 
-    def test_can_load_page_and_error_on_no_hospital(self):
+    def test_can_load_page_and_error_on_missing_hospital(self):
         pickup_address_field = self.browser.find_element_by_name('pickup-address')
 
         pickup_address_field.click()
@@ -372,7 +372,7 @@ class NewVisitorTest(unittest.TestCase):
 
         self.assertIn("Please select a hospital", error_box.text)
 
-    def test_can_load_page_and_error_on_no_interested(self):
+    def test_can_load_page_and_error_on_missing_interested(self):
         pickup_address_field = self.browser.find_element_by_name('pickup-address')
 
         pickup_address_field.click()
@@ -397,7 +397,7 @@ class NewVisitorTest(unittest.TestCase):
         self.assertTrue(not success_message.is_displayed())
         self.assertIn("Please indicate whether the patient is interested in speaking with a caseworker.", error_box.text)
 
-    def test_can_load_page_and_error_on_no_homeless(self):
+    def test_can_load_page_and_error_on_missing_homeless(self):
         pickup_address_field = self.browser.find_element_by_name('pickup-address')
 
         pickup_address_field.click()
@@ -425,7 +425,7 @@ class NewVisitorTest(unittest.TestCase):
         self.assertTrue(not success_message.is_displayed())
         self.assertIn("Please select whether the patient is homeless.", error_box.text)
         
-    def test_can_load_page_and_error_on_no_superutilizer(self):
+    def test_can_load_page_and_error_on_missing_superutilizer(self):
         pickup_address_field = self.browser.find_element_by_name('pickup-address')
 
         pickup_address_field.click()
