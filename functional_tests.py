@@ -102,7 +102,6 @@ class NewVisitorTest(unittest.TestCase):
 
         first_hospital_el.click()
         first_interested_el.click()
-
         first_homeless_el.click()
         first_superutilizer_el.click()
 
@@ -440,9 +439,9 @@ class NewVisitorTest(unittest.TestCase):
         first_interested_el = self.browser.find_element_by_xpath(first_interested_xpath)
         first_interested_el.click()
 
-        fourth_el_xpath = '//fieldset[@id="language-field"]/div[4]'
-        fourth_field_div = self.browser.find_element_by_xpath(fourth_el_xpath)
-        fourth_field_div.click()
+        fourth_language_xpath = '//fieldset[@id="language-field"]/div[4]'
+        fourth_field_el = self.browser.find_element_by_xpath(fourth_el_xpath)
+        fourth_field_el.click()
 
         first_homeless_xpath = '//fieldset[@id="homeless-field"]/div[1]'
         first_homeless_el = self.browser.find_element_by_xpath(first_homeless_xpath)
