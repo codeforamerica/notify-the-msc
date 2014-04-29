@@ -1,5 +1,5 @@
 language: python
-python:
+python
 - '2.7'
 install: pip install -r requirements.txt
 script:
@@ -19,3 +19,5 @@ deploy:
     secure: NqU8lmBBZ9T3vud0Vgo6BxnjdQxNpzyP2BHIUYiXXORaa9HIROmOhcbrSu7dcTNlT04Ux+F9eaDhHp4ybznopuCKgBcjFCi5xzahidSbudIF5yuGUOjJGE2Cwl36wbtNutQ7cOTGMLzS3mj1C2fL1ml3/1N529B0nmJCmHTozB0=
   app: notify-the-msc-staging
   on: master
+notifications:
+  webhooks: http://project-monitor.codeforamerica.org/projects/197a4506-1dea-4340-a3a1-013dd0dc2db9/status
