@@ -20,4 +20,4 @@ deploy:
   app: notify-the-msc-staging
   on: master
 notifications:
-  webhooks: http://project-monitor.codeforamerica.org/projects/2b40577c-2e35-4893-affa-c7fe5cfbe6b5/status
+  webhooks: http://project-monitor.codeforamerica.org/projects/197a4506-1dea-4340-a3a1-013dd0dc2db9/status
