@@ -22,7 +22,7 @@ def index():
 
 @app.route("/incidents", methods=["POST"])
 def submit_incident():
-    errors = [] # list of all errors
+    errors = []  # list of all errors
 
     # verify pickup address not empty
     pickup_address = request.form.get('pickup_address', '')
@@ -32,6 +32,15 @@ def submit_incident():
     # verify hospital given
     if "hospital" not in request.form:
         errors.append("missing_hospital")
+
+    if "language" not in request.form:
+        errors.append("missing_language")
+
+    if "interested" not in request.form:
+        errors.append("missing_interested")
+
+    if "superutilizer" not in request.form:
+        errors.append("missing_superutilizer")
 
     if not errors:
         return jsonify(status="ok")
