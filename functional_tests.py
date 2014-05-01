@@ -77,7 +77,7 @@ class NewVisitorTest(unittest.TestCase):
         fourth_field_div = self.browser.find_element_by_xpath(fourth_el_xpath)
         fourth_field_div.click()
 
-        # If text has been entered for pickup address, paramedic can submit this field.
+        # If text has been entered for all required fields, paramedic can submit this field.
         error_box = self.browser.find_element_by_id('error-window')
         success_message = self.browser.find_element_by_id('success-message')
 
@@ -393,6 +393,6 @@ class NewVisitorTest(unittest.TestCase):
         self.assertTrue(error_box.is_displayed())
         self.assertTrue(not success_message.is_displayed())
         self.assertIn("Please select whether the patient is a frequent EMS utilizer.", error_box.text)
-        
+
 if __name__ == '__main__':
     unittest.main()
