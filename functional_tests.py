@@ -56,6 +56,10 @@ class NewVisitorTest(unittest.TestCase):
         pickup_address_label = self.browser.find_element_by_id('pickup-address-label')
         self.assertIn('Pickup address', pickup_address_label.text)
 
+        # Paramedic sees an example address.
+        example_description = self.browser.find_element_by_id('pickup-address-example')
+        self.assertIn('Example: 1301 w 12th st', example_description.text)
+
         # Paramedic sees hospital field
         hospital_field = self.browser.find_element_by_id('hospital-field')
         self.assertTrue(hospital_field.is_displayed())
