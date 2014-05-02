@@ -1,6 +1,11 @@
 notify-the-msc
 ==============
 
+Installation
+------
+
+Notify the MSC is a Python Flask application. To install Python in your local development environment, follow the dirctions for [Python & Virtualenv](https://github.com/codeforamerica/howto/blob/master/Python-Virtualenv.md).
+
 Testing
 ------
 To test using a local browser, run `python functional_tests.py`.
