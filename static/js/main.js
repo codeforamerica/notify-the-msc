@@ -83,6 +83,11 @@ $(document).ready(function() {
             show_error("Please enter a description of the person's clothing.");
             return false;
         }
+        // Enforce the character limit
+        if (clothing_description.length > character_limit) {
+            show_error("Your description of the person's clothing is too long. The limit is " + character_limit + " characters.");
+            return false;
+        }
 
         data_to_submit = {
             pickup_address: pickup_address,
