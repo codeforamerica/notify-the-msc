@@ -1,4 +1,8 @@
 $(document).ready(function() {
+    // Setup.
+    var character_limit = 50;
+    $('#report').text(character_limit);
+
     var show_error = function(msg) {
         $('#success-message').hide();
         $('#error-window').text(msg);
@@ -9,6 +13,13 @@ $(document).ready(function() {
         $('#error-window').hide();
         $('#success-message').show();
     };
+
+    // Character limit reporting for clothing description field.
+    $('#clothing-description-field').keyup(function() {
+        current_length = $('#clothing-description-field').val().length;
+        var remaining = character_limit - current_length;
+        $('#report').text(remaining);
+    });
 
     // Handle switching active fields
     $('fieldset .field').click(function() {
