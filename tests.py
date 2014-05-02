@@ -15,7 +15,7 @@ class SubmitTestCase(unittest.TestCase):
             "pickup_address": "123 elm ave",
             "hospital": "memorial",
             "language": "Khmer",
-            "clothing_description": "White T-shirt with blue logo, gray jeans, Nike tennis shoes",
+            "clothing_description": "White T-shirt, gray jeans, Nike tennis shoes",
             "interested": "No",
             "superutilizer": "Yes"
         }

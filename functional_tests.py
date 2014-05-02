@@ -84,7 +84,7 @@ class NewVisitorTest(unittest.TestCase):
         # Fill out clothing description field.
         clothing_description_field = self.browser.find_element_by_name('clothing-description-field')
         clothing_description_field.click()
-        clothing_description_field.send_keys('White T-shirt with blue logo, gray jeans, Nike tennis shoes')
+        clothing_description_field.send_keys('White T-shirt, gray jeans, Nike tennis shoes')
 
         # If text has been entered for all required fields, paramedic can submit this field.
         error_box = self.browser.find_element_by_id('error-window')
