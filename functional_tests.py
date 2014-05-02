@@ -126,7 +126,7 @@ class NewVisitorTest(unittest.TestCase):
         example_description = self.browser.find_element_by_id('clothing-description-example')
         self.assertIn('Example: Green coat, ripped jeans, black hat', example_description.text)
 
-#    def test_clothing_description_field_has_a_character_counter)self);
+#    def test_clothing_description_field_has_a_character_counter(self);
 #        return true;
 
     def test_can_load_page_and_error_on_no_clothing_description(self):  #68918872
