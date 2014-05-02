@@ -15,6 +15,7 @@ class SubmitTestCase(unittest.TestCase):
             "pickup_address": "123 elm ave",
             "hospital": "memorial",
             "language": "Khmer",
+            "clothing_description": "White T-shirt with blue logo, gray jeans, Nike tennis shoes",
             "interested": "No",
             "superutilizer": "Yes"
         }
@@ -63,6 +64,18 @@ class SubmitTestCase(unittest.TestCase):
         assert rv.status_code == 400
         assert rv_dict.get("status") == "error"
         assert "missing_language" in rv_dict.get("errors")
+
+    def test_response_without_clothing_description_returns_error(self):
+        missing_clothing_description_submission = self.valid_submission.copy()
+
+        del missing_clothing_description_submission["clothing_description"]
+
+        rv = self.app.post("incidents", data=missing_clothing_description_submission)
+        rv_dict = json.loads(rv.data)
+
+        assert rv.status_code == 400
+        assert rv_dict.get("status") == "error"
+        assert "missing_clothing_description" in rv_dict.get("errors")
 
     def test_response_without_interested_returns_error(self):
         missing_interested_submission = self.valid_submission.copy()

@@ -66,12 +66,20 @@ $(document).ready(function() {
             return false;
         }
 
+        var clothing_description = $('#clothing-description-field').val();
+        // Show error if empty clothing description
+        if (clothing_description === '') {
+            show_error("Please enter a description of the person's clothing.");
+            return false;
+        }
+
         data_to_submit = {
             pickup_address: pickup_address,
             hospital: hospital,
             interested: interested,
             superutilizer: superutilizer,
-            language: language
+            language: language,
+            clothing_description: clothing_description
         };
 
         $.ajax({
