@@ -1,6 +1,8 @@
 notify-the-msc
 ==============
 
+Team Long Beach's in-progress app for connecting emergency responders and follow-up outreach in Long Beach, California.
+
 Testing
 ------
 To view on your local machine:
