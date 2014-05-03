@@ -27,7 +27,7 @@ def submit_incident():
     # verify pickup address not empty
     pickup_address = request.form.get('pickup_address', '')
     if len(pickup_address) == 0:
-        errors.append("empty_address")
+        errors.append("missing_address")
 
     # verify hospital given
     if "hospital" not in request.form:

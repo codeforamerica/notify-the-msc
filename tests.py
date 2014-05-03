@@ -29,17 +29,17 @@ class SubmitTestCase(unittest.TestCase):
         assert rv.status_code == 200
         assert json.loads(rv.data).get("status") == "ok"
 
-    def test_response_with_empty_address_returns_error(self):
-        empty_address_submission = {
-            "pickup_address": ""
+    def test_response_without_address_returns_error(self):
+        missing_address_submission = {
+            "pickup_address": ''
         }
 
-        rv = self.app.post("incidents", data=empty_address_submission)
+        rv = self.app.post("incidents", data=missing_address_submission)
         rv_dict = json.loads(rv.data)
 
         assert rv.status_code == 400
         assert rv_dict.get("status") == "error"
-        assert "empty_address" in rv_dict.get("errors")
+        assert "missing_address" in rv_dict.get("errors")
 
     def test_response_without_hospital_returns_error(self):
         missing_hospital_submission = self.valid_submission.copy()
