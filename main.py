@@ -26,7 +26,7 @@ def submit_incident():
 
     # verify pickup address not empty
     pickup_address = request.form.get('pickup_address', '')
-    if len(request.form.get('pickup_address')) == 0:
+    if len(pickup_address) == 0:
         errors.append("empty_address")
 
     # verify hospital given
@@ -36,8 +36,14 @@ def submit_incident():
     if "language" not in request.form:
         errors.append("missing_language")
 
-    if "clothing_description" not in request.form:
+    # verify clothing description not empty
+    clothing_description = request.form.get('clothing_description', '')
+    if len(clothing_description) == 0:
         errors.append("missing_clothing_description")
+    # verify clothing description not too long
+    # @todo: Update this so it doesn't use a hardcoded character limit.
+    elif len(clothing_description) > 50:
+        errors.append("overlong_clothing_description")
 
     if "interested" not in request.form:
         errors.append("missing_interested")
