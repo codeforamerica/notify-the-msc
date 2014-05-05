@@ -3,9 +3,30 @@ $(document).ready(function() {
     var character_limit = 50;
     $('#report').text(character_limit);
 
-    var show_error = function(msg) {
+    var errors = new Array();
+
+    var register_error = function(msg) {
+        errors.push(msg);
+    };
+
+    var reset_errors = function() {
+        while (errors.length > 0) {
+            errors.pop();
+        }
+    };
+
+    var show_errors = function() {
         $('#success-message').hide();
-        $('#error-window').text(msg);
+        // Generate a list of unordered items from the contents of this array.
+        var html_list_of_errors = '<ul>';
+        for (var i = 0; i < errors.length; i = i + 1) {
+            html_list_of_errors += '<li>' + errors[i] + '</li>';
+        }
+        html_list_of_errors += '</ul>';
+
+        // Then insert it into the #error-window div.
+        $('#error-window')
+            .html(html_list_of_errors);
         $('#error-window').show();
     };
 
@@ -45,47 +66,41 @@ $(document).ready(function() {
         var pickup_address = $('#pickup-address-field').val();
         // Show error if empty pickup address
         if (pickup_address === '') {
-            show_error('Please enter an address.');
-            return false;
+            register_error('Please enter an address.');
         }
 
         var language = getSelectedFieldValue($('#language-field'));
         // Show error if empty language
         if (language == '') {
-            show_error('Please select a language.');
-            return false;
+            register_error('Please select a language.');
         }
 
         var hospital = getSelectedFieldValue($('#hospital-field'));
         // Show error if empty hospital
         if (hospital === '') {
-            show_error('Please select a hospital.');
-            return false;
+            register_error('Please select a hospital.');
         }
 
         var interested = getSelectedFieldValue($('#interested-field'));
         // Show error if empty "interested?" field
         if (interested === '') {
-            show_error('Please indicate whether the patient is interested in speaking with a caseworker.');
-            return false;
+            register_error('Please indicate whether the patient is interested in speaking with a caseworker.');
         }
 
         var superutilizer = getSelectedFieldValue($('#superutilizer-field'));
         // Show error if empty "superutilizer?" field
         if (superutilizer === '') {
-            show_error('Please select whether the patient is a frequent EMS utilizer.');
-            return false;
+            register_error('Please select whether the patient is a frequent EMS utilizer.');
         }
 
         var clothing_description = $('#clothing-description-field').val();
         // Show error if empty clothing description
         if (clothing_description === '') {
-            show_error("Please enter a description of the person's clothing.");
-            return false;
+            register_error("Please enter a description of the person's clothing.");
         }
         // Enforce the character limit
         if (clothing_description.length > character_limit) {
-            show_error("Your description of the person's clothing is too long. The limit is " + character_limit + " characters.");
+            register_error("Your description of the person's clothing is too long. The limit is " + character_limit + " characters.");
             return false;
         }
 
@@ -98,18 +113,22 @@ $(document).ready(function() {
             clothing_description: clothing_description
         };
 
-        $.ajax({
-            url: '/incidents',
-            data: data_to_submit,
-            method: 'POST',
-            success: function(data) {
-                show_success();
-            },
-            error: function() {
-                show_error("It looks like this didn't send. Try again?");
-            }
-        });
-
-        return false;
+        if (errors.length != 0) {
+            show_errors();
+            reset_errors();
+        }
+        else {
+            $.ajax({
+                url: '/incidents',
+                data: data_to_submit,
+                method: 'POST',
+                success: function(data) {
+                    show_success();
+                },
+                error: function() {
+                    register_error("It looks like this didn't send. Try again?");
+                }
+            });
+        }
     });
 });
