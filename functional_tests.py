@@ -84,7 +84,7 @@ class NewVisitorTest(unittest.TestCase):
         # Fill out clothing description field.
         clothing_description_field = self.browser.find_element_by_name('clothing-description-field')
         clothing_description_field.click()
-        clothing_description_field.send_keys('White T-shirt with blue logo, gray jeans, Nike tennis shoes')
+        clothing_description_field.send_keys('White T-shirt, gray jeans, Nike tennis shoes')
 
         # If text has been entered for all required fields, paramedic can submit this field.
         error_box = self.browser.find_element_by_id('error-window')
@@ -126,7 +126,7 @@ class NewVisitorTest(unittest.TestCase):
         example_description = self.browser.find_element_by_id('clothing-description-example')
         self.assertIn('Example: Green coat, ripped jeans, black hat', example_description.text)
 
-#    def test_clothing_description_field_has_a_character_counter)self);
+#    def test_clothing_description_field_has_a_character_counter(self);
 #        return true;
 
     def test_can_load_page_and_error_on_no_clothing_description(self):  #68918872

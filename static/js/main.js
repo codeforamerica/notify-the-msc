@@ -1,4 +1,8 @@
 $(document).ready(function() {
+    // Setup.
+    var character_limit = 50;
+    $('#report').text(character_limit);
+
     var errors = new Array();
 
     var register_error = function(msg) {
@@ -30,6 +34,13 @@ $(document).ready(function() {
         $('#error-window').hide();
         $('#success-message').show();
     };
+
+    // Character limit reporting for clothing description field.
+    $('#clothing-description-field').keyup(function() {
+        current_length = $('#clothing-description-field').val().length;
+        var remaining = character_limit - current_length;
+        $('#report').text(remaining);
+    });
 
     // Handle switching active fields
     $('fieldset .field').click(function() {
@@ -86,6 +97,11 @@ $(document).ready(function() {
         // Show error if empty clothing description
         if (clothing_description === '') {
             register_error("Please enter a description of the person's clothing.");
+        }
+        // Enforce the character limit
+        if (clothing_description.length > character_limit) {
+            register_error("Your description of the person's clothing is too long. The limit is " + character_limit + " characters.");
+            return false;
         }
 
         data_to_submit = {

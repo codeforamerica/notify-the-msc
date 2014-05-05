@@ -15,7 +15,7 @@ class SubmitTestCase(unittest.TestCase):
             "pickup_address": "123 elm ave",
             "hospital": "memorial",
             "language": "Khmer",
-            "clothing_description": "White T-shirt with blue logo, gray jeans, Nike tennis shoes",
+            "clothing_description": "White T-shirt, gray jeans, Nike tennis shoes",
             "interested": "No",
             "superutilizer": "Yes"
         }
@@ -29,17 +29,17 @@ class SubmitTestCase(unittest.TestCase):
         assert rv.status_code == 200
         assert json.loads(rv.data).get("status") == "ok"
 
-    def test_response_with_empty_address_returns_error(self):
-        empty_address_submission = {
-            "pickup_address": ""
+    def test_response_without_address_returns_error(self):
+        missing_address_submission = {
+            "pickup_address": ''
         }
 
-        rv = self.app.post("incidents", data=empty_address_submission)
+        rv = self.app.post("incidents", data=missing_address_submission)
         rv_dict = json.loads(rv.data)
 
         assert rv.status_code == 400
         assert rv_dict.get("status") == "error"
-        assert "empty_address" in rv_dict.get("errors")
+        assert "missing_address" in rv_dict.get("errors")
 
     def test_response_without_hospital_returns_error(self):
         missing_hospital_submission = self.valid_submission.copy()
@@ -64,6 +64,18 @@ class SubmitTestCase(unittest.TestCase):
         assert rv.status_code == 400
         assert rv_dict.get("status") == "error"
         assert "missing_language" in rv_dict.get("errors")
+
+    def test_response_with_overlong_clothing_description_returns_error(self):
+        overlong_clothing_description_submission = self.valid_submission.copy()
+
+        overlong_clothing_description_submission["clothing_description"] = "White T-shirt with blue logo, gray jeans, Nike tennis shoes"
+
+        rv = self.app.post("incidents", data=overlong_clothing_description_submission)
+        rv_dict = json.loads(rv.data)
+
+        assert rv.status_code == 400
+        assert rv_dict.get("status") == "error"
+        assert "overlong_clothing_description" in rv_dict.get("errors")
 
     def test_response_without_clothing_description_returns_error(self):
         missing_clothing_description_submission = self.valid_submission.copy()
