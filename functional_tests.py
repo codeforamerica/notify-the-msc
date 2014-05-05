@@ -56,6 +56,10 @@ class NewVisitorTest(unittest.TestCase):
         pickup_address_label = self.browser.find_element_by_id('pickup-address-label')
         self.assertIn('Pickup address', pickup_address_label.text)
 
+        # Paramedic sees an example address.
+        example_description = self.browser.find_element_by_id('pickup-address-example')
+        self.assertIn('Example: 1301 w 12th st', example_description.text)
+
         # Paramedic sees hospital field
         hospital_field = self.browser.find_element_by_id('hospital-field')
         self.assertTrue(hospital_field.is_displayed())
@@ -77,7 +81,12 @@ class NewVisitorTest(unittest.TestCase):
         fourth_field_div = self.browser.find_element_by_xpath(fourth_el_xpath)
         fourth_field_div.click()
 
-        # If text has been entered for pickup address, paramedic can submit this field.
+        # Fill out clothing description field.
+        clothing_description_field = self.browser.find_element_by_name('clothing-description-field')
+        clothing_description_field.click()
+        clothing_description_field.send_keys('White T-shirt, gray jeans, Nike tennis shoes')
+
+        # If text has been entered for all required fields, paramedic can submit this field.
         error_box = self.browser.find_element_by_id('error-window')
         success_message = self.browser.find_element_by_id('success-message')
 
@@ -103,6 +112,37 @@ class NewVisitorTest(unittest.TestCase):
         self.assertTrue(success_message.is_displayed())
         self.assertTrue(not error_box.is_displayed())
         self.assertIn('Information successfully submitted', success_message.text)
+
+    def test_can_see_clothing_description_field(self):  #68918872
+        # Paramedic sees that this field exists.
+        clothing_description_field = self.browser.find_element_by_id('clothing-description-field')
+        self.assertTrue(clothing_description_field.is_displayed())
+
+        # Paramedic sees that this field is labeled 'Clothing description'.
+        clothing_description_label = self.browser.find_element_by_id('clothing-description-label')
+        self.assertIn('Clothing description', clothing_description_label.text)
+
+        # Paramedic sees an example description.
+        example_description = self.browser.find_element_by_id('clothing-description-example')
+        self.assertIn('Example: Green coat, ripped jeans, black hat', example_description.text)
+
+#    def test_clothing_description_field_has_a_character_counter(self);
+#        return true;
+
+    def test_can_load_page_and_error_on_no_clothing_description(self):  #68918872
+        # If clothing description hasn't been entered, paramedic can't submit this field.
+        clothing_description_field = self.browser.find_element_by_name('clothing-description-field')
+        clothing_description_field.clear()
+        submit_button = self.browser.find_element_by_id('submit')
+        submit_button.click()
+
+        error_box = self.browser.find_element_by_id('error-window')
+        success_message = self.browser.find_element_by_id('success-message')
+
+        self.assertTrue(error_box.is_displayed())
+        self.assertTrue(not success_message.is_displayed())
+#        self.assertIn("Please enter a description of the person's clothing.", error_box.text)
+        # @todo: Retest once error handling prints all errors, not just the first one. #70551632
 
     def test_hospital_field_input_works(self):
         # Paramedic sees hospital field
@@ -384,6 +424,6 @@ class NewVisitorTest(unittest.TestCase):
         self.assertTrue(error_box.is_displayed())
         self.assertTrue(not success_message.is_displayed())
         self.assertIn("Please select whether the patient is a frequent EMS utilizer.", error_box.text)
-        
+
 if __name__ == '__main__':
     unittest.main()

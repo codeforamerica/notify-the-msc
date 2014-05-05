@@ -1,4 +1,8 @@
 $(document).ready(function() {
+    // Setup.
+    var character_limit = 50;
+    $('#report').text(character_limit);
+
     var show_error = function(msg) {
         $('#success-message').hide();
         $('#error-window').text(msg);
@@ -9,6 +13,13 @@ $(document).ready(function() {
         $('#error-window').hide();
         $('#success-message').show();
     };
+
+    // Character limit reporting for clothing description field.
+    $('#clothing-description-field').keyup(function() {
+        current_length = $('#clothing-description-field').val().length;
+        var remaining = character_limit - current_length;
+        $('#report').text(remaining);
+    });
 
     // Handle switching active fields
     $('fieldset .field').click(function() {
@@ -66,12 +77,25 @@ $(document).ready(function() {
             return false;
         }
 
+        var clothing_description = $('#clothing-description-field').val();
+        // Show error if empty clothing description
+        if (clothing_description === '') {
+            show_error("Please enter a description of the person's clothing.");
+            return false;
+        }
+        // Enforce the character limit
+        if (clothing_description.length > character_limit) {
+            show_error("Your description of the person's clothing is too long. The limit is " + character_limit + " characters.");
+            return false;
+        }
+
         data_to_submit = {
             pickup_address: pickup_address,
             hospital: hospital,
             interested: interested,
             superutilizer: superutilizer,
-            language: language
+            language: language,
+            clothing_description: clothing_description
         };
 
         $.ajax({
