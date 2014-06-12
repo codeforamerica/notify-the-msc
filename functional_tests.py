@@ -1,4 +1,7 @@
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import unittest
 
 import os
@@ -93,8 +96,9 @@ class NewVisitorTest(unittest.TestCase):
         first_homeless_el.click()
 
         submit_button.click()
-        self.browser.implicitly_wait(3)
 
+        wait = WebDriverWait(self.browser, 10)
+        wait.until(EC.visibility_of(success_message))
         self.assertTrue(success_message.is_displayed())
         self.assertTrue(not error_box.is_displayed())
         self.assertIn('Information successfully submitted', success_message.text)
