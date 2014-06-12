@@ -440,8 +440,8 @@ class NewVisitorTest(unittest.TestCase):
         first_interested_el.click()
 
         fourth_language_xpath = '//fieldset[@id="language-field"]/div[4]'
-        fourth_field_el = self.browser.find_element_by_xpath(fourth_el_xpath)
-        fourth_field_el.click()
+        fourth_language_el  = self.browser.find_element_by_xpath(fourth_language_xpath)
+        fourth_language_el.click()
 
         first_homeless_xpath = '//fieldset[@id="homeless-field"]/div[1]'
         first_homeless_el = self.browser.find_element_by_xpath(first_homeless_xpath)
