@@ -13,7 +13,7 @@
                 <div class="field field-text-input">
                     <label id="pickup-address-label">Pickup address</label>
                     <input id="pickup-address-field" name="pickup-address" type="text">
-                    <p>Example: 1301 w 12th st</p>
+                    <p id="pickup-address-example" class="example">Example: 1301 w 12th st</p>
                 </div>
                 <fieldset id="language-field">
                   <legend id="language-label">Language</legend>
@@ -48,6 +48,12 @@
                     </label>
                   </div>
                 </fieldset>
+                <div class="field field-text-input">
+                    <label id="clothing-description-label">Clothing description</label>
+                    <input id="clothing-description-field" name="clothing-description-field" type="text">
+                    <p id="clothing-description-example" class="example">Example: Green coat, ripped jeans, black hat</p>
+                    <p>Maximum 50 characters (<span id="report"></span> remaining)</p>
+                </div>
                 <fieldset id="hospital-field">
                   <legend>Hospital</legend>
                   <div class="field">
