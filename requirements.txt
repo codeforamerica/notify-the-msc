@@ -1,3 +1,4 @@
 Flask==0.10.1
 selenium==2.41.0
 sendgrid==0.5.0
+gunicorn==18.0
