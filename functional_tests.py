@@ -68,6 +68,10 @@ class NewVisitorTest(unittest.TestCase):
         interested_field = self.browser.find_element_by_id('interested-field')
         self.assertTrue(interested_field.is_displayed())
 
+        # Paramedic sees "homeless?" field
+        homeless_field = self.browser.find_element_by_id('homeless-field')
+        self.assertTrue(homeless_field.is_displayed())
+        
         # Paramedic sees a submit button that says 'Send to MSC'.
         submit_button = self.browser.find_element_by_id('submit')
         self.assertTrue(submit_button.is_displayed())
@@ -96,6 +100,9 @@ class NewVisitorTest(unittest.TestCase):
         first_interested_xpath = '//fieldset[@id="interested-field"]/div[1]'
         first_interested_el = self.browser.find_element_by_xpath(first_interested_xpath)
 
+        first_homeless_xpath = '//fieldset[@id="homeless-field"]/div[1]'
+        first_homeless_el = self.browser.find_element_by_xpath(first_homeless_xpath)
+
         first_superutilizer_xpath = '//fieldset[@id="superutilizer-field"]/div[1]'
         first_superutilizer_el = self.browser.find_element_by_xpath(first_superutilizer_xpath)
 
@@ -104,6 +111,7 @@ class NewVisitorTest(unittest.TestCase):
 
         first_hospital_el.click()
         first_interested_el.click()
+        first_homeless_el.click()
         first_superutilizer_el.click()
 
         submit_button.click()
@@ -219,6 +227,38 @@ class NewVisitorTest(unittest.TestCase):
 
         self.assertIn("field-active", second_field_div.get_attribute('class'))
 
+    def test_homeless_field_input_works(self):
+        # Paramedic sees homeless field
+        homeless_field = self.browser.find_element_by_id('homeless-field')
+        self.assertTrue(homeless_field.is_displayed())
+
+        # Hospital field has an appropriate label
+        homeless_label = self.browser.find_element_by_xpath('//fieldset[@id="homeless-field"]/legend')
+        self.assertIn(homeless_label.text, "Is this person homeless?")
+
+        # Check that there's a button for Yes
+        yes_button = self.browser.find_element_by_id('homeless-yes')
+        self.assertIn(yes_button.text, "Yes")
+
+        # Check that there's a button for No
+        no_button = self.browser.find_element_by_id('homeless-no')
+        self.assertIn(no_button.text, "No")
+
+        # Check that there's a button for Unsure
+        unsure_button = self.browser.find_element_by_id('homeless-unsure')
+        self.assertIn(unsure_button.text, "Unsure")
+
+        # Check that no element is active on load
+        active_elements = homeless_field.find_elements_by_class_name('field-active')
+        self.assertEquals(0, len(active_elements))
+
+        # Check that clicking a different element makes it active
+        second_el_xpath = '//fieldset[@id="homeless-field"]/div[2]'
+        second_field_div = self.browser.find_element_by_xpath(second_el_xpath)
+        second_field_div.click()
+
+        self.assertIn("field-active", second_field_div.get_attribute('class'))
+
     def test_superutilizer_field_input_works(self):
         # Paramedic sees superutilizer field
         superutilizer_field = self.browser.find_element_by_id('superutilizer-field')
@@ -251,7 +291,7 @@ class NewVisitorTest(unittest.TestCase):
 
         self.assertIn("field-active", second_field_div.get_attribute('class'))
 
-    def test_can_load_page_and_error_on_no_address(self):
+    def test_can_load_page_and_error_on_missing_address(self):
         # If address hasn't been entered, paramedic can't submit this field.
         pickup_address_field = self.browser.find_element_by_name('pickup-address')
         pickup_address_field.clear()
@@ -261,6 +301,7 @@ class NewVisitorTest(unittest.TestCase):
         error_box = self.browser.find_element_by_id('error-window')
         success_message = self.browser.find_element_by_id('success-message')
 
+        print error_box.text, success_message.text
         self.assertTrue(error_box.is_displayed())
         self.assertTrue(not success_message.is_displayed())
         self.assertIn("Please enter an address", error_box.text)
@@ -322,7 +363,7 @@ class NewVisitorTest(unittest.TestCase):
 
         self.assertIn('field-active', fourth_field_div.get_attribute('class'))
 
-    def test_can_load_page_and_error_on_no_language(self):  #68918808
+    def test_can_load_page_and_error_on_missing_language(self):  #68918808
         # @todo: Refactor to use deselectByIndex or deselectByValue instead of filling out everything else?
         # @todo: DRY.
         # If no language has been selected, paramedic can't submit this field.
@@ -349,7 +390,7 @@ class NewVisitorTest(unittest.TestCase):
 
         self.assertIn("Please select a language", error_box.text)
 
-    def test_can_load_page_and_error_on_no_hospital(self):
+    def test_can_load_page_and_error_on_missing_hospital(self):
         pickup_address_field = self.browser.find_element_by_name('pickup-address')
 
         pickup_address_field.click()
@@ -371,7 +412,7 @@ class NewVisitorTest(unittest.TestCase):
 
         self.assertIn("Please select a hospital", error_box.text)
 
-    def test_can_load_page_and_error_on_no_interested(self):
+    def test_can_load_page_and_error_on_missing_interested(self):
         pickup_address_field = self.browser.find_element_by_name('pickup-address')
 
         pickup_address_field.click()
@@ -396,7 +437,7 @@ class NewVisitorTest(unittest.TestCase):
         self.assertTrue(not success_message.is_displayed())
         self.assertIn("Please indicate whether the patient is interested in speaking with a caseworker.", error_box.text)
 
-    def test_can_load_page_and_error_on_no_superutilizer(self):
+    def test_can_load_page_and_error_on_missing_homeless(self):
         pickup_address_field = self.browser.find_element_by_name('pickup-address')
 
         pickup_address_field.click()
@@ -413,6 +454,38 @@ class NewVisitorTest(unittest.TestCase):
         fourth_el_xpath = '//fieldset[@id="language-field"]/div[4]'
         fourth_field_div = self.browser.find_element_by_xpath(fourth_el_xpath)
         fourth_field_div.click()
+
+        submit_button = self.browser.find_element_by_id('submit')
+        submit_button.click()
+
+        error_box = self.browser.find_element_by_id('error-window')
+        success_message = self.browser.find_element_by_id('success-message')
+
+        self.assertTrue(error_box.is_displayed())
+        self.assertTrue(not success_message.is_displayed())
+        self.assertIn("Please select whether the patient is homeless.", error_box.text)
+        
+    def test_can_load_page_and_error_on_missing_superutilizer(self):
+        pickup_address_field = self.browser.find_element_by_name('pickup-address')
+
+        pickup_address_field.click()
+        pickup_address_field.send_keys('456 elm ave')
+
+        first_hospital_xpath = '//fieldset[@id="hospital-field"]/div[1]'
+        first_hospital_el = self.browser.find_element_by_xpath(first_hospital_xpath)
+        first_hospital_el.click()
+
+        first_interested_xpath = '//fieldset[@id="interested-field"]/div[1]'
+        first_interested_el = self.browser.find_element_by_xpath(first_interested_xpath)
+        first_interested_el.click()
+
+        fourth_language_xpath = '//fieldset[@id="language-field"]/div[4]'
+        fourth_language_el  = self.browser.find_element_by_xpath(fourth_language_xpath)
+        fourth_language_el.click()
+
+        first_homeless_xpath = '//fieldset[@id="homeless-field"]/div[1]'
+        first_homeless_el = self.browser.find_element_by_xpath(first_homeless_xpath)
+        first_homeless_el.click()
 
         submit_button = self.browser.find_element_by_id('submit')
         submit_button.click()

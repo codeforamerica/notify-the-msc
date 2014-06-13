@@ -87,6 +87,12 @@ $(document).ready(function() {
             register_error('Please indicate whether the patient is interested in speaking with a caseworker.');
         }
 
+        var homeless = getSelectedFieldValue($('#homeless-field'));
+        // Show error if empty "homeless?" field
+        if (homeless === '') {
+            register_error('Please select whether the patient is homeless.');
+        }
+
         var superutilizer = getSelectedFieldValue($('#superutilizer-field'));
         // Show error if empty "superutilizer?" field
         if (superutilizer === '') {
@@ -98,16 +104,17 @@ $(document).ready(function() {
         if (clothing_description === '') {
             register_error("Please enter a description of the person's clothing.");
         }
+
         // Enforce the character limit
         if (clothing_description.length > character_limit) {
             register_error("Your description of the person's clothing is too long. The limit is " + character_limit + " characters.");
-            return false;
         }
 
         data_to_submit = {
             pickup_address: pickup_address,
             hospital: hospital,
             interested: interested,
+            homeless: homeless,
             superutilizer: superutilizer,
             language: language,
             clothing_description: clothing_description

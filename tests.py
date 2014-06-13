@@ -17,6 +17,7 @@ class SubmitTestCase(unittest.TestCase):
             "language": "Khmer",
             "clothing_description": "White T-shirt, gray jeans, Nike tennis shoes",
             "interested": "No",
+            "homeless": "Yes",
             "superutilizer": "Yes"
         }
 
@@ -100,6 +101,18 @@ class SubmitTestCase(unittest.TestCase):
         assert rv.status_code == 400
         assert rv_dict.get("status") == "error"
         assert "missing_interested" in rv_dict.get("errors")
+
+    def test_response_without_homeless_returns_error(self):
+        missing_homeless_submission = self.valid_submission.copy()
+
+        del missing_homeless_submission["homeless"]
+
+        rv = self.app.post("incidents", data=missing_homeless_submission)
+        rv_dict = json.loads(rv.data)
+
+        assert rv.status_code == 400
+        assert rv_dict.get("status") == "error"
+        assert "missing_homeless" in rv_dict.get("errors")
 
     def test_response_without_superutilizer_returns_error(self):
         missing_superutilizer_submission = self.valid_submission.copy()
