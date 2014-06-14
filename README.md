@@ -6,7 +6,7 @@ Team Long Beach's in-progress app for connecting emergency responders and follow
 Installation
 ------
 
-Notify the MSC is a Python Flask application. To install Python in your local development environment, follow the dirctions for [Python & Virtualenv](https://github.com/codeforamerica/howto/blob/master/Python-Virtualenv.md). The file `Procfile` contains the command for running the app; you can run it directly:
+Notify the MSC is a Python Flask application. To install Python in your local development environment, follow the directions for [Python & Virtualenv](https://github.com/codeforamerica/howto/blob/master/Python-Virtualenv.md). The file `Procfile` contains the command for running the app; you can run it directly:
 
     $ python main.py
 
